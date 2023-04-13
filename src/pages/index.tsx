@@ -25,24 +25,30 @@ const Home: NextPage = () => {
             {!user.isSignedIn && <SignInButton />}{" "}
             {!!user.isSignedIn && <SignOutButton />}{" "}
           </div>
-          <div className="flex flex-col ">
-            {data?.map((event) => (
-              <div
-                key={event.id}
-                className="m-2 flex justify-center rounded-md border-b border-slate-400 bg-white p-8 dark:bg-gray-800"
-              >
-                <div className="justify-start px-10">
-                  <Pickbox teamName={event.homeTeam} />
+          {!user.isSignedIn && <div>Sign in to play</div>}
+          {!!user.isSignedIn && (
+            <div className="flex flex-col ">
+              {data?.map((event) => (
+                <div
+                  key={event.id}
+                  className="m-2 flex justify-center rounded-md border-b border-slate-400 bg-white p-8 dark:bg-gray-800"
+                >
+                  <div className="justify-start px-10">
+                    <Pickbox teamName={event.homeTeam} />
+                  </div>
+                  --
+                  <div className="px-10">
+                    {" "}
+                    {event.startTime.toLocaleString()}
+                  </div>
+                  --
+                  <div className="justify-end px-10">
+                    <Pickbox teamName={event.awayTeam} />
+                  </div>
                 </div>
-                --
-                <div className="px-10"> {event.startTime.toLocaleString()}</div>
-                --
-                <div className="justify-end px-10">
-                  <Pickbox teamName={event.awayTeam} />
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </>
