@@ -6,14 +6,40 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
+model Event {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  homeTeam  String
+  awayTeam  String
+  startTime DateTime
+  endTime   DateTime
+  picks     Pick[]
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  @@index([startTime(sort: Desc)])
+}
+
+model Pick {
+  id        String   @id @default(cuid())
+  userId    String
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id])
+  team      String
+  status    Status   @default(PENDING)
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+enum Status {
+  WIN
+  LOSS
+  PENDING
+  CANCELLED
+  DRAW
 }
