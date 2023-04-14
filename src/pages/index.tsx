@@ -18,15 +18,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main className="bg-gray-200 dark:bg-gray-900">
-        <div className="">
-          <div className="mb-3 flex justify-end border-b  border-slate-400 p-4">
+      <main className="h-screen w-screen bg-gray-200 dark:bg-gray-900">
+        <div className="flex flex-col items-center">
+          <div className="mb-3 border-b  border-slate-400 p-4">
             Announcements, etc....., Current Pick? Three Tabs Pick | History |
             Search?
           </div>
           {!user.isSignedIn && <div>Sign in to play</div>}
           {!!user.isSignedIn && (
-            <div className="flex flex-col gap-4 ">
+            <div className="flex w-3/5 flex-col gap-4">
               {data?.map((event) => (
                 <Eventbox {...event} key={event.id} />
               ))}
