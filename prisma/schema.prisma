@@ -17,6 +17,7 @@ model Event {
   updatedAt DateTime @updatedAt
   homeTeam  String
   awayTeam  String
+  league    League
   startTime DateTime
   endTime   DateTime
   picks     Pick[]
@@ -42,4 +43,11 @@ enum Status {
   PENDING
   CANCELLED
   DRAW
+}
+
+enum League {
+  NBA
+  MLB
+  NFL
+  NHL
 }
