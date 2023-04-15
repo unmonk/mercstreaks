@@ -12,17 +12,17 @@ datasource db {
 }
 
 model Event {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  homeTeam  String
-  awayTeam  String
-  league    League   @default(NFL)
-  startTime DateTime
-  endTime   DateTime
-  picks     Pick[]
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  leftOption  String
+  rightOption String
+  league      League   @default(OTHER)
+  startTime   DateTime
+  endTime     DateTime
+  picks       Pick[]
 
-  @@index([startTime(sort: Desc)])
+  @@index([startTime(sort: Asc)])
 }
 
 model Pick {
@@ -30,11 +30,45 @@ model Pick {
   userId    String
   eventId   String
   event     Event    @relation(fields: [eventId], references: [id])
-  team      String
+  option    PickType
   status    Status   @default(PENDING)
   updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
+  @@index([eventId])
+}
+
+model Streak {
+  id      String     @id
+  userId  String
+  started DateTime   @default(now())
+  ended   DateTime
+  updated DateTime   @updatedAt
+  User    User       @relation(fields: [userId], references: [id])
+  count   Int        @default(0)
+  type    StreakType
+
+  @@index([userId])
+}
+
+model User {
+  id              String   @id
+  email           String?  @unique
+  name            String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  picks           Pick[]
+  currentStreakId String
+  isPro           Boolean  @default(false)
+  streaks         Streak[]
+
+  @@index([id])
+}
+
+enum StreakType {
+  WIN
+  LOSS
 }
 
 enum Status {
@@ -45,9 +79,15 @@ enum Status {
   DRAW
 }
 
+enum PickType {
+  LEFT
+  RIGHT
+}
+
 enum League {
   NBA
   MLB
   NFL
   NHL
+  OTHER
 }

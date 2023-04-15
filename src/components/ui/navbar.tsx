@@ -18,8 +18,8 @@ const Navbar = (props: NavbarProps) => {
               </Link>
             </div>
             <div className="hidden items-center space-x-2 md:flex">
-              <a href="/test">History</a>
-              <a href="/test">Stats</a>
+              <a href="/test">My Groups</a>
+              <a href="/test">Leaderboards</a>
             </div>
           </div>
 

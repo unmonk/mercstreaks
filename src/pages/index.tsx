@@ -10,6 +10,7 @@ const Home: NextPage = () => {
   const { data, isLoading } = api.events.getAll.useQuery();
   if (isLoading) return <div>...Loading</div>;
   if (!data) return <div>Something went wrong</div>;
+  console.table(user);
   return (
     <>
       <Head>
@@ -21,8 +22,7 @@ const Home: NextPage = () => {
       <main className="h-screen w-screen bg-gray-200 dark:bg-gray-900">
         <div className="flex flex-col items-center">
           <div className="mb-3 border-b  border-slate-400 p-4">
-            Announcements, etc....., Current Pick? Three Tabs Pick | History |
-            Search?
+            Stash: $20,000 | Leader: 15 | Needed 1
           </div>
           {!user.isSignedIn && <div>Sign in to play</div>}
           {!!user.isSignedIn && (
