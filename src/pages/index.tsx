@@ -8,8 +8,8 @@ import { api } from "~/utils/api";
 const Home: NextPage = () => {
   const user = useUser();
   const { data, isLoading } = api.events.getAll.useQuery();
-  if (isLoading) return <div>...Loading</div>;
-  if (!data) return <div>Something went wrong</div>;
+  //if (isLoading) return <div>...Loading</div>;
+  //if (!data) return <div>Something went wrong</div>;
   console.table(user);
   return (
     <>
@@ -18,8 +18,9 @@ const Home: NextPage = () => {
         <meta name="description" content="Mercs Streaks" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
-      <main className="h-screen w-screen bg-gray-200 dark:bg-gray-900">
+
+      <main className="dark h-screen w-screen bg-gray-200 dark:bg-gray-900">
+        <Navbar />
         <div className="flex flex-col items-center">
           <div className="mb-3 border-b  border-slate-400 p-4">
             Stash: $20,000 | Leader: 15 | Needed 1

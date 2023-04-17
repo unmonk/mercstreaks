@@ -17,6 +17,7 @@ model Event {
   updatedAt   DateTime @updatedAt
   leftOption  String
   rightOption String
+  description String
   league      League   @default(OTHER)
   startTime   DateTime
   endTime     DateTime
