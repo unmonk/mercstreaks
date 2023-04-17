@@ -10,7 +10,6 @@ const Home: NextPage = () => {
   const { data, isLoading } = api.events.getAll.useQuery();
   if (isLoading) return <div>...Loading</div>;
   if (!data) return <div>Something went wrong</div>;
-  console.table(user);
   return (
     <>
       <Head>
@@ -27,7 +26,7 @@ const Home: NextPage = () => {
           </div>
           {!user.isSignedIn && <div>Sign in to play</div>}
           {!!user.isSignedIn && (
-            <div className="flex w-3/5 flex-col gap-4">
+            <div className="flex w-5/6 flex-col gap-4">
               {data?.map((event) => (
                 <Eventbox {...event} key={event.id} />
               ))}

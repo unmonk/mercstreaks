@@ -25,16 +25,16 @@ const Eventbox = (props: EventboxProps) => {
 
   return (
     <div
-      className={`rounded-lg bg-gray-100 p-4 dark:bg-gray-700 ${
+      className={`rounded-lg bg-gray-100 p-2 dark:bg-gray-700 ${
         pick !== PickOption.NONE ? `opacity-50` : `opacity-100`
       }`}
     >
-      <div className="flex justify-center bg-slate-200 text-xl">
+      <div className="flex w-full justify-center bg-slate-200 text-xl">
         {props.description}
       </div>
       <div className="flex items-center justify-between">
         <input
-          className="m-2 h-6 w-6 rounded-sm border border-gray-300 bg-white"
+          className="h-6 w-6 rounded-sm border border-gray-300 bg-white"
           checked={pick === PickOption.LEFT}
           disabled={PickOption.RIGHT === pick}
           type="checkbox"
@@ -46,16 +46,14 @@ const Eventbox = (props: EventboxProps) => {
         </div>
         <div className="flex flex-col items-center text-gray-500">
           <div className="my-2 text-sm">{props.startTime.toLocaleString()}</div>
-          <div className="text-xs">
-            Projected Finish: {props.endTime?.toLocaleString()}
-          </div>
+          <div className="text-xs">Ends: {props.endTime?.toLocaleString()}</div>
         </div>
         <div className="m-1 text-black dark:text-white">
           <div className="text-lg font-semibold">{props.rightOption}</div>
           <div className="text-xs text-gray-500">W7 - L1</div>
         </div>
         <input
-          className="m-2 h-6 w-6 rounded-sm border border-gray-300 bg-white"
+          className="m-1 h-6 w-6 rounded-sm border border-gray-300 bg-white"
           checked={pick === PickOption.RIGHT}
           disabled={PickOption.LEFT === pick}
           type="checkbox"
