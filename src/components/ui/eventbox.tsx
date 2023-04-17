@@ -29,6 +29,9 @@ const Eventbox = (props: EventboxProps) => {
         pick !== PickOption.NONE ? `opacity-50` : `opacity-100`
       }`}
     >
+      <div className="flex justify-center bg-slate-200 text-xl">
+        {props.description}
+      </div>
       <div className="flex items-center justify-between">
         <input
           className="m-2 h-6 w-6 rounded-sm border border-gray-300 bg-white"
