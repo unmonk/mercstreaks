@@ -8,8 +8,8 @@ import { api } from "~/utils/api";
 const Home: NextPage = () => {
   const user = useUser();
   const { data, isLoading } = api.events.getAll.useQuery();
-  //if (isLoading) return <div>...Loading</div>;
-  //if (!data) return <div>Something went wrong</div>;
+  if (isLoading) return <div>...Loading</div>;
+  if (!data) return <div>Something went wrong</div>;
   console.table(user);
   return (
     <>
