@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { PickType } from "@prisma/client";
-import { PickTypeSchema } from "@/prisma/generated/zod";
+
+const PickTypeSchema = z.enum(["LEFT", "RIGHT", "NONE"]);
 
 const submitPickInputSchema = z.object({
   userId: z.string(),
