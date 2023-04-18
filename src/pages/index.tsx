@@ -26,7 +26,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="dark h-screen w-screen bg-gradient-to-t from-green-950 to-green-600">
+      <main className="dark h-auto w-auto bg-gradient-to-t from-green-950 to-green-600">
         <Navbar />
 
         <div className="flex flex-col items-center">
@@ -69,7 +69,7 @@ const Home: NextPage = () => {
                   />
                 ))}
               </div>
-              <Adbox name="Best Buy" />;
+              <Adbox name="Best Buy" />
             </>
           )}
         </div>
