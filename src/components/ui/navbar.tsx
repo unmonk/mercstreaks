@@ -1,16 +1,9 @@
-import {
-  SignInButton,
-  SignOutButton,
-  useUser,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignInButton, useUser, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { useColorMode } from "~/hooks/useColorMode";
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface NavbarProps {}
 
 const Navbar = (props: NavbarProps) => {
-  const [colorMode, setColorMode] = useColorMode();
   const user = useUser();
   return (
     <nav className="border-gray-200 bg-white dark:bg-gray-900">
@@ -23,8 +16,10 @@ const Navbar = (props: NavbarProps) => {
         </Link>
 
         <div className="flex md:order-2">
-          {!user.isSignedIn && <SignInButton />}
-          {!!user.isSignedIn && <UserButton />}
+          <div className="inline-flex items-center">
+            {!user.isSignedIn && <SignInButton />}
+            {!!user.isSignedIn && <UserButton />}
+          </div>
           <button
             data-collapse-toggle="navbar-cta"
             type="button"
