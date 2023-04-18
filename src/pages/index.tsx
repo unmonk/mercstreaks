@@ -3,6 +3,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { Eventbox } from "~/components/ui/eventbox";
 import { Navbar } from "~/components/ui/navbar";
+import { Adbox } from "~/components/ui/adbox";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
@@ -58,15 +59,18 @@ const Home: NextPage = () => {
           </div>
           {!user.isSignedIn && <div>Sign in to play</div>}
           {!!user.isSignedIn && (
-            <div className="flex w-5/6 flex-col gap-4">
-              {data?.map((event) => (
-                <Eventbox
-                  {...event}
-                  temperature={event._count.picks}
-                  key={event.id}
-                />
-              ))}
-            </div>
+            <>
+              <div className="mb-4 flex w-5/6 flex-col gap-4">
+                {data?.map((event) => (
+                  <Eventbox
+                    {...event}
+                    temperature={event._count.picks}
+                    key={event.id}
+                  />
+                ))}
+              </div>
+              <Adbox name="Best Buy" />;
+            </>
           )}
         </div>
       </main>

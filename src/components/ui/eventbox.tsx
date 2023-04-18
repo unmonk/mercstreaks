@@ -1,5 +1,4 @@
 import { useAuth } from "@clerk/nextjs";
-import { procedureTypes } from "@trpc/server";
 import React, { useState } from "react";
 
 interface EventboxProps {
@@ -23,8 +22,7 @@ enum PickType {
 }
 
 const Eventbox = (props: EventboxProps) => {
-  const { userId, orgSlug, orgRole } = useAuth();
-  console.log(orgSlug, orgRole);
+  const { userId } = useAuth();
   console.log(userId);
   const [pick, setPick] = useState(PickType.NONE);
   //setPick api.picks.create
@@ -40,7 +38,9 @@ const Eventbox = (props: EventboxProps) => {
     setPick((prevState) => (prevState === picked ? PickType.NONE : picked));
   };
 
-  const tempWidth = props.temperature ?? "10" + "%";
+  const tempWidth = props.temperature
+    ? props.temperature.toString()
+    : 10 ?? "10" + "%";
   const tempLabel =
     props.temperature >= 70 ? "Hot" : props.temperature >= 30 ? "Warm" : "Cold";
   const tempColor =
