@@ -9,36 +9,86 @@ interface EventboxProps {
   id: string;
 }
 
-enum PickOption {
+enum PickType {
   LEFT,
   RIGHT,
   NONE,
 }
 
 const Eventbox = (props: EventboxProps) => {
-  const [pick, setPick] = useState(PickOption.NONE);
+  const [pick, setPick] = useState(PickType.NONE);
   //setPick api.picks.create
 
-  const handlePick = (picked: PickOption) => {
-    setPick((prevState) => (prevState === picked ? PickOption.NONE : picked));
+  const handlePick = (picked: PickType) => {
+    setPick((prevState) => (prevState === picked ? PickType.NONE : picked));
   };
 
   return (
     <div
-      className={`rounded-lg bg-gray-100 p-2 dark:bg-gray-700 ${
-        pick !== PickOption.NONE ? `opacity-50` : `opacity-100`
+      className={`rounded-lg bg-gray-400 p-2 shadow-md dark:bg-gray-700 ${
+        pick !== PickType.NONE ? `opacity-50` : `opacity-100`
       }`}
     >
-      <div className="flex w-full justify-center bg-slate-200 text-xl">
+      <div className="mx-1 mb-2 flex items-center justify-between rounded-lg bg-gray-400 dark:bg-gray-700">
+        <h3 className="text-md font-semibold">NFL | 8:25 PM</h3>
+        <span className="text-sm text-gray-600">NFL Network</span>
+      </div>
+
+      <div className=" rounded-lg bg-slate-50 p-2">
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-sm text-gray-600">
+            NFL Who will WIN this matchup?
+          </p>
+          <div className="flex h-2 w-1/6 rounded-full bg-gray-200 dark:bg-gray-700">
+            <div
+              className="h-1 rounded-full bg-red-600"
+              style={{ width: "90%" }}
+            ></div>
+            Hot
+          </div>
+        </div>
+
+        <div className="mb-2 flex items-center justify-between gap-1">
+          <div className="flex items-center gap-1">
+            <button className="aspect-square h-16 w-16 rounded-lg bg-slate-300 bg-gradient-to-t from-slate-200 px-2 py-2 text-white "></button>
+            <span className=" mx-1 text-sm text-black ">
+              Chicago Bears (3-1)
+            </span>
+          </div>
+          <div className="hidden text-5xl md:block">🏈</div>
+          <div className="flex items-center gap-1">
+            <span className=" mx-1 text-sm text-black">
+              New Orleans Saints (1-3)
+            </span>
+            <button className="aspect-square h-16 w-16 rounded-lg bg-slate-300 bg-gradient-to-t from-slate-200 px-2 py-2 text-white"></button>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between text-center">
+          <span className="text-md font-semibold text-black">6.8%</span>
+          <a href="#" className="text-green-800 underline">
+            Preview
+          </a>
+          <span className="text-md font-semibold text-black">93.2%</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export { Eventbox };
+
+{
+  /* <div className="flex w-full justify-center bg-slate-200 text-xl">
         {props.description}
       </div>
       <div className="flex items-center justify-between">
         <input
           className="h-6 w-6 rounded-sm border border-gray-300 bg-white"
-          checked={pick === PickOption.LEFT}
-          disabled={PickOption.RIGHT === pick}
+          checked={pick === PickType.LEFT}
+          disabled={PickType.RIGHT === pick}
           type="checkbox"
-          onChange={() => handlePick(PickOption.LEFT)}
+          onChange={() => handlePick(PickType.LEFT)}
         />
         <div className="m-1">
           <div className="text-lg font-semibold">{props.leftOption}</div>
@@ -54,14 +104,10 @@ const Eventbox = (props: EventboxProps) => {
         </div>
         <input
           className="m-1 h-6 w-6 rounded-sm border border-gray-300 bg-white"
-          checked={pick === PickOption.RIGHT}
-          disabled={PickOption.LEFT === pick}
+          checked={pick === PickType.RIGHT}
+          disabled={PickType.LEFT === pick}
           type="checkbox"
-          onChange={() => handlePick(PickOption.RIGHT)}
+          onChange={() => handlePick(PickType.RIGHT)}
         />
-      </div>
-    </div>
-  );
-};
-
-export { Eventbox };
+      </div> */
+}

@@ -31,7 +31,7 @@ model Pick {
   userId    String
   eventId   String
   event     Event    @relation(fields: [eventId], references: [id])
-  option    PickType
+  option    PickType @default(NONE)
   status    Status   @default(PENDING)
   updatedAt DateTime @updatedAt
   User      User     @relation(fields: [userId], references: [id])
@@ -83,6 +83,7 @@ enum Status {
 enum PickType {
   LEFT
   RIGHT
+  NONE
 }
 
 enum League {

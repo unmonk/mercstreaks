@@ -18,11 +18,24 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="dark h-screen w-screen bg-gray-200 dark:bg-gray-900">
+      <main className="dark h-screen w-screen bg-gradient-to-t from-green-950 to-green-600">
         <Navbar />
+
         <div className="flex flex-col items-center">
-          <div className="mb-3 border-b  border-slate-400 p-4">
+          <div className="center mb-3  w-full border-b border-zinc-800 bg-black pl-3 text-white">
             Stash: $20,000 | Leader: 15 | Needed 1
+          </div>
+          {/* Date Picker */}
+          <div className="mb-3 flex w-full flex-wrap border-b  border-zinc-800 p-4">
+            <button className="m-0 w-1/3 border-2 border-r-0 border-black bg-slate-800 bg-gradient-to-b from-slate-600 p-2 text-white">
+              Wed Dec. 3
+            </button>
+            <button className=" m-0 w-1/3 border-b-2 border-t-2 border-black bg-green-800 bg-gradient-to-b from-green-700 p-2 text-white">
+              Thu Dec. 4
+            </button>
+            <button className="m-0 w-1/3 border-2 border-l-0 border-black  bg-slate-800 bg-gradient-to-b from-slate-600 p-2  text-white">
+              Fri Dec. 5
+            </button>
           </div>
           {!user.isSignedIn && <div>Sign in to play</div>}
           {!!user.isSignedIn && (

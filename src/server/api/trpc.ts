@@ -93,3 +93,9 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+
+/**
+ * Protected (authenticated) procedure
+ *
+ */
+export const protectedProecudre = t.procedure;
