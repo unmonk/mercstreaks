@@ -21,6 +21,7 @@ model Event {
   league      League   @default(OTHER)
   startTime   DateTime
   endTime     DateTime
+  network     String   @default("N/A")
   picks       Pick[]
 
   @@index([startTime(sort: Asc)])
@@ -42,16 +43,31 @@ model Pick {
 }
 
 model Streak {
-  id      String     @id
-  userId  String
-  started DateTime   @default(now())
-  ended   DateTime
-  updated DateTime   @updatedAt
-  User    User       @relation(fields: [userId], references: [id])
-  count   Int        @default(0)
-  type    StreakType
+  id         String     @id
+  userId     String
+  started    DateTime   @default(now())
+  ended      DateTime
+  updated    DateTime   @updatedAt
+  User       User       @relation(fields: [userId], references: [id])
+  count      Int        @default(0)
+  type       StreakType
+  campaignId String
+  Campaign   Campaign   @relation(fields: [campaignId], references: [id])
 
   @@index([userId])
+  @@index([campaignId])
+}
+
+model Campaign {
+  id             String   @id @default(cuid())
+  name           String
+  description    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  streakWinCount Int      @default(1)
+  start          DateTime @default(now())
+  end            DateTime
+  streaks        Streak[]
 }
 
 model User {

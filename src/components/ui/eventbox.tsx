@@ -1,11 +1,18 @@
+import { useAuth } from "@clerk/nextjs";
+import { procedureTypes } from "@trpc/server";
 import React, { useState } from "react";
 
 interface EventboxProps {
   leftOption: string;
+  leftPickCount?: number;
   rightOption: string;
-  description?: string;
+  rightPickCount?: number;
+  description: string;
   startTime: Date;
   endTime?: Date;
+  network?: string;
+  temperature: number;
+  league?: string;
   id: string;
 }
 
@@ -16,12 +23,32 @@ enum PickType {
 }
 
 const Eventbox = (props: EventboxProps) => {
+  const { userId, orgSlug, orgRole } = useAuth();
+  console.log(orgSlug, orgRole);
+  console.log(userId);
   const [pick, setPick] = useState(PickType.NONE);
   //setPick api.picks.create
 
   const handlePick = (picked: PickType) => {
+    if (picked === pick) {
+      //Do Unselect Pick
+      setPick(PickType.NONE);
+    } else {
+      //Do Select Pick
+      setPick(picked);
+    }
     setPick((prevState) => (prevState === picked ? PickType.NONE : picked));
   };
+
+  const tempWidth = props.temperature ?? "10" + "%";
+  const tempLabel =
+    props.temperature >= 70 ? "Hot" : props.temperature >= 30 ? "Warm" : "Cold";
+  const tempColor =
+    props.temperature >= 70
+      ? "bg-red-600"
+      : props.temperature >= 30
+      ? "bg-yellow-600"
+      : "bg-blue-600";
 
   return (
     <div
@@ -30,46 +57,61 @@ const Eventbox = (props: EventboxProps) => {
       }`}
     >
       <div className="mx-1 mb-2 flex items-center justify-between rounded-lg bg-gray-400 dark:bg-gray-700">
-        <h3 className="text-md font-semibold">NFL | 8:25 PM</h3>
-        <span className="text-sm text-gray-600">NFL Network</span>
+        <h3 className="text-md font-semibold">
+          {props.league ?? "OTHER"} |{" "}
+          {props.startTime.toLocaleTimeString([], {
+            timeZoneName: "short",
+            hour: "numeric",
+            minute: "numeric",
+          })}
+        </h3>
+        <span className="text-sm text-gray-600">{props.network ?? "N/A"}</span>
       </div>
 
       <div className=" rounded-lg bg-slate-50 p-2">
         <div className="mb-2 flex items-center justify-between">
-          <p className="text-sm text-gray-600">
-            NFL Who will WIN this matchup?
-          </p>
+          <p className="text-sm text-gray-600">{props.description}</p>
           <div className="flex h-2 w-1/6 rounded-full bg-gray-200 dark:bg-gray-700">
             <div
-              className="h-1 rounded-full bg-red-600"
-              style={{ width: "90%" }}
+              className={`${tempColor} h-1 rounded-full`}
+              style={{ width: tempWidth }}
             ></div>
-            Hot
+            {tempLabel}
           </div>
         </div>
 
         <div className="mb-2 flex items-center justify-between gap-1">
           <div className="flex items-center gap-1">
-            <button className="aspect-square h-16 w-16 rounded-lg bg-slate-300 bg-gradient-to-t from-slate-200 px-2 py-2 text-white "></button>
+            <button
+              className="aspect-square h-16 w-16 rounded-lg bg-slate-300 bg-gradient-to-t from-slate-200 px-2 py-2 text-white  "
+              onClick={() => handlePick(PickType.LEFT)}
+            ></button>
             <span className=" mx-1 text-sm text-black ">
-              Chicago Bears (3-1)
+              {props.leftOption}
             </span>
           </div>
           <div className="hidden text-5xl md:block">🏈</div>
           <div className="flex items-center gap-1">
             <span className=" mx-1 text-sm text-black">
-              New Orleans Saints (1-3)
+              {props.rightOption}
             </span>
-            <button className="aspect-square h-16 w-16 rounded-lg bg-slate-300 bg-gradient-to-t from-slate-200 px-2 py-2 text-white"></button>
+            <button
+              className="aspect-square h-16 w-16 rounded-lg bg-slate-300 bg-gradient-to-t from-slate-200 px-2 py-2 text-white"
+              onClick={() => handlePick(PickType.RIGHT)}
+            ></button>
           </div>
         </div>
 
         <div className="flex items-center justify-between text-center">
-          <span className="text-md font-semibold text-black">6.8%</span>
+          <span className="text-md font-semibold text-black">
+            {props.leftPickCount ?? "50"}%
+          </span>
           <a href="#" className="text-green-800 underline">
             Preview
           </a>
-          <span className="text-md font-semibold text-black">93.2%</span>
+          <span className="text-md font-semibold text-black">
+            {props.rightPickCount ?? "50"}%
+          </span>
         </div>
       </div>
     </div>

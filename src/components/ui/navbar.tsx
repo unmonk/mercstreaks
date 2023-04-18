@@ -16,10 +16,6 @@ const Navbar = (props: NavbarProps) => {
         </Link>
 
         <div className="flex md:order-2">
-          <div className="inline-flex items-center">
-            {!user.isSignedIn && <SignInButton />}
-            {!!user.isSignedIn && <UserButton />}
-          </div>
           <button
             data-collapse-toggle="navbar-cta"
             type="button"
@@ -36,12 +32,16 @@ const Navbar = (props: NavbarProps) => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
           </button>
+          <div className="inline-flex items-center">
+            {!user.isSignedIn && <SignInButton />}
+            {!!user.isSignedIn && <UserButton />}
+          </div>
         </div>
         <div
           className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"

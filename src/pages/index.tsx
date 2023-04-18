@@ -8,8 +8,15 @@ import { api } from "~/utils/api";
 const Home: NextPage = () => {
   const user = useUser();
   const { data, isLoading } = api.events.getAll.useQuery();
+
   if (isLoading) return <div>...Loading</div>;
   if (!data) return <div>Something went wrong</div>;
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const tomorrow2 = new Date(today);
+  tomorrow2.setDate(tomorrow2.getDate() + 2);
+  console.log(data);
   return (
     <>
       <Head>
@@ -28,20 +35,36 @@ const Home: NextPage = () => {
           {/* Date Picker */}
           <div className="mb-3 flex w-full flex-wrap border-b  border-zinc-800 p-4">
             <button className="m-0 w-1/3 border-2 border-r-0 border-black bg-slate-800 bg-gradient-to-b from-slate-600 p-2 text-white">
-              Wed Dec. 3
+              {today.toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+              })}
             </button>
             <button className=" m-0 w-1/3 border-b-2 border-t-2 border-black bg-green-800 bg-gradient-to-b from-green-700 p-2 text-white">
-              Thu Dec. 4
+              {tomorrow.toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+              })}
             </button>
             <button className="m-0 w-1/3 border-2 border-l-0 border-black  bg-slate-800 bg-gradient-to-b from-slate-600 p-2  text-white">
-              Fri Dec. 5
+              {tomorrow2.toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+              })}
             </button>
           </div>
           {!user.isSignedIn && <div>Sign in to play</div>}
           {!!user.isSignedIn && (
             <div className="flex w-5/6 flex-col gap-4">
               {data?.map((event) => (
-                <Eventbox {...event} key={event.id} />
+                <Eventbox
+                  {...event}
+                  temperature={event._count.picks}
+                  key={event.id}
+                />
               ))}
             </div>
           )}
