@@ -23,7 +23,6 @@ enum PickType {
 
 const Eventbox = (props: EventboxProps) => {
   const { userId } = useAuth();
-  console.log(userId);
   const [pick, setPick] = useState(PickType.NONE);
   //setPick api.picks.create
 
@@ -70,7 +69,7 @@ const Eventbox = (props: EventboxProps) => {
 
       <div className=" rounded-lg bg-slate-50 p-2">
         <div className="mb-2 flex items-center justify-between">
-          <p className="text-sm text-gray-600">{props.description}</p>
+          <p className="text-black">{props.description}</p>
           <div className="flex h-2 w-1/6 rounded-full bg-gray-200 dark:bg-gray-700">
             <div
               className={`${tempColor} h-1 rounded-full`}
@@ -86,13 +85,13 @@ const Eventbox = (props: EventboxProps) => {
               className="aspect-square h-16 w-16 rounded-lg bg-slate-300 bg-gradient-to-t from-slate-200 px-2 py-2 text-white  "
               onClick={() => handlePick(PickType.LEFT)}
             ></button>
-            <span className=" mx-1 text-sm text-black ">
+            <span className=" mx-1 text-base text-black ">
               {props.leftOption}
             </span>
           </div>
           <div className="hidden text-5xl md:block">🏈</div>
           <div className="flex items-center gap-1">
-            <span className=" mx-1 text-sm text-black">
+            <span className=" mx-1 text-base text-black">
               {props.rightOption}
             </span>
             <button
