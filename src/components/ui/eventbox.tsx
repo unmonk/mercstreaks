@@ -1,5 +1,8 @@
 import { useAuth } from "@clerk/nextjs";
 import React, { useState } from "react";
+import { EventHeader } from "./eventheader";
+import { EventQuestion } from "./eventquestion";
+import { EventFooter } from "./eventfooter";
 
 interface EventboxProps {
   leftOption: string;
@@ -27,14 +30,15 @@ const Eventbox = (props: EventboxProps) => {
   //setPick api.picks.create
 
   const handlePick = (picked: PickType) => {
-    if (picked === pick) {
-      //Do Unselect Pick
-      setPick(PickType.NONE);
-    } else {
-      //Do Select Pick
-      setPick(picked);
-    }
     setPick((prevState) => (prevState === picked ? PickType.NONE : picked));
+    // if (picked === pick) {
+    //   //Do Unselect Pick
+    //   setPick(PickType.NONE);
+    // } else {
+    //   //Do Select Pick
+    //   setPick(picked);
+    //   console.log(picked, pick);
+    // }
   };
 
   const tempWidth = props.temperature
@@ -52,39 +56,42 @@ const Eventbox = (props: EventboxProps) => {
   return (
     <div
       className={`rounded-lg bg-gray-400 p-2 shadow-md dark:bg-gray-700 ${
-        pick !== PickType.NONE ? `opacity-50` : `opacity-100`
+        pick !== PickType.NONE ? `opacity-80` : `opacity-100`
+      } ${
+        pick !== PickType.NONE
+          ? " border-2 border-yellow-200 shadow-lg shadow-yellow-200 transition-shadow"
+          : "border-gray-400"
       }`}
     >
-      <div className="mx-1 mb-2 flex items-center justify-between rounded-lg bg-gray-400 dark:bg-gray-700">
-        <h3 className="text-md font-semibold">
-          {props.league ?? "OTHER"} |{" "}
-          {props.startTime.toLocaleTimeString([], {
-            timeZoneName: "short",
-            hour: "numeric",
-            minute: "numeric",
-          })}
-        </h3>
-        <span className="text-sm text-gray-600">{props.network ?? "N/A"}</span>
-      </div>
+      <EventHeader
+        league={props.league}
+        startTime={props.startTime}
+        network={props.network}
+      />
 
-      <div className=" rounded-lg bg-slate-50 p-2">
-        <div className="mb-2 flex items-center justify-between">
-          <p className="text-black">{props.description}</p>
-          <div className="flex h-2 w-1/6 rounded-full bg-gray-200 dark:bg-gray-700">
-            <div
-              className={`${tempColor} h-1 rounded-full`}
-              style={{ width: tempWidth }}
-            ></div>
-            {tempLabel}
-          </div>
-        </div>
+      <div className="pickcard rounded-lg bg-slate-50 p-2">
+        <EventQuestion
+          description={props.description}
+          tempColor={tempColor}
+          tempLabel={tempLabel}
+          tempWidth={tempWidth}
+        />
 
         <div className="mb-2 flex items-center justify-between gap-1">
           <div className="flex items-center gap-1">
             <button
-              className="aspect-square h-16 w-16 rounded-lg bg-slate-300 bg-gradient-to-t from-slate-200 px-2 py-2 text-white  "
+              disabled={pick === PickType.RIGHT}
+              className={`${
+                pick === PickType.LEFT
+                  ? "bg-slate-500"
+                  : "bg-slate-300 bg-gradient-to-t from-slate-200"
+              } aspect-square h-16 w-16 rounded-lg  px-2 py-2 text-white`}
               onClick={() => handlePick(PickType.LEFT)}
-            ></button>
+            >
+              <div className="text-center text-4xl">
+                {pick === PickType.LEFT && "☑️"}
+              </div>
+            </button>
             <span className=" mx-1 text-base text-black ">
               {props.leftOption}
             </span>
@@ -95,23 +102,25 @@ const Eventbox = (props: EventboxProps) => {
               {props.rightOption}
             </span>
             <button
-              className="aspect-square h-16 w-16 rounded-lg bg-slate-300 bg-gradient-to-t from-slate-200 px-2 py-2 text-white"
+              disabled={pick === PickType.LEFT}
+              className={`${
+                pick === PickType.RIGHT
+                  ? "bg-slate-500"
+                  : "bg-slate-300 bg-gradient-to-t from-slate-200"
+              } aspect-square h-16 w-16 rounded-lg  px-2 py-2 text-white`}
               onClick={() => handlePick(PickType.RIGHT)}
-            ></button>
+            >
+              <div className="text-center text-4xl">
+                {pick === PickType.RIGHT && "☑️"}
+              </div>
+            </button>
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-center">
-          <span className="text-md font-semibold text-black">
-            {props.leftPickCount ?? "50"}%
-          </span>
-          <a href="#" className="text-green-800 underline">
-            Preview
-          </a>
-          <span className="text-md font-semibold text-black">
-            {props.rightPickCount ?? "50"}%
-          </span>
-        </div>
+        <EventFooter
+          leftPickCount={props.leftPickCount}
+          rightPickCount={props.rightPickCount}
+        />
       </div>
     </div>
   );
