@@ -1,28 +1,39 @@
-# Create T3 App
+# Merc Streaks
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## About
 
-## What's next? How do I make an app with this?
+This project is a clone of a popular Streaks app. It is built with [Next.js](https://nextjs.org/), [Clerk](https://clerk.dev/), [PlanetScale](https://planetscale.com/), and [Tailwind CSS](https://tailwindcss.com/).
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Getting Started
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Use .env.example to create a .env file and add your credentials.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Install dependencies and Generate prisma client
 
-## Learn More
+```bash
+npm install
+```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+To push the database schema to PlanetScale, run the following command:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+npx prisma db push
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+To view the database in Prisma Studio, run the following command:
 
-## How do I deploy this?
+```bash
+npx prisma studio
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+To start the development server, run the following command:
+
+```bash
+npm run dev
+```
+
+---
+
+#### TODO
+
+This is a work in progress, and a project to learn t3 stack. Do not expect it to work yet.

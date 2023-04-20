@@ -56,10 +56,10 @@ const Eventbox = (props: EventboxProps) => {
   return (
     <div
       className={`rounded-lg bg-gray-400 p-2 shadow-md dark:bg-gray-700 ${
-        pick !== PickType.NONE ? `opacity-80` : `opacity-100`
+        pick !== PickType.NONE ? `opacity-90` : `opacity-100`
       } ${
         pick !== PickType.NONE
-          ? " border-2 border-yellow-200 shadow-lg shadow-yellow-200 transition-shadow"
+          ? "border-2 border-yellow-200 shadow-lg shadow-yellow-200 transition-shadow"
           : "border-gray-400"
       }`}
     >
