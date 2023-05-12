@@ -2,6 +2,7 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface NavbarProps {}
 
@@ -14,9 +15,9 @@ const Navbar = (props: NavbarProps) => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="lucide lucide-combine"
     >
       <rect width="8" height="8" x="2" y="2" rx="2"></rect>
@@ -36,9 +37,9 @@ const Navbar = (props: NavbarProps) => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="lucide lucide-bar-chart-3"
     >
       <path d="M3 3v18h18"></path>
@@ -56,9 +57,9 @@ const Navbar = (props: NavbarProps) => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="lucide lucide-users-2"
     >
       <path d="M14 19a6 6 0 0 0-12 0"></path>
@@ -162,12 +163,14 @@ const Navbar = (props: NavbarProps) => {
             })}
           </ul>
         </div>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        <SignedOut>
-          <SignInButton mode="redirect" />
-        </SignedOut>
+        <div>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton mode="redirect" />
+          </SignedOut>
+        </div>
       </div>
       <div className="mb-3 w-full border-b border-zinc-800 bg-black pl-3 text-center text-white">
         <SignedIn>Stash: $20,000 | Leader: 15 | Needed 1</SignedIn>

@@ -1,10 +1,10 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 const inter = Inter({ subsets: ["latin"] });
 import { Navbar } from "@/components/Navbar";
 import { siteConfig } from "@/config/site";
-import { Providers } from "./providers";
+import { Providers } from "../lib/providers";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata = {
   title: {
@@ -21,11 +21,11 @@ export const metadata = {
   ],
   authors: [
     {
-      name: "shadcn",
-      url: "https://shadcn.com",
+      name: "Scott Weaver",
+      url: "https://weaverscott.com",
     },
   ],
-  creator: "shadcn",
+  creator: "unmonk",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -43,7 +43,7 @@ export const metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [`${siteConfig.url}/og.jpg`],
-    creator: "@shadcn",
+    creator: "@realdonaldtrump",
   },
   icons: {
     icon: "/favicon.ico",
