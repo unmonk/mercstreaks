@@ -52,7 +52,7 @@ export default function EventModal({ modalType }: EventModalProps) {
     <Dialog modal>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTrigger>
-          <Button variant={"default"}>+Create</Button>
+          <Button>{modalType === "edit" ? "Edit" : "Create"}</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -91,7 +91,6 @@ export default function EventModal({ modalType }: EventModalProps) {
                 </div>
 
                 <div className="w-1/2">
-                  {" "}
                   <Input
                     type="datetime-local"
                     {...register("startTime", {
@@ -129,7 +128,9 @@ export default function EventModal({ modalType }: EventModalProps) {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button type="submit">Create</Button>
+            <Button type="submit" onClick={() => console.log("here")}>
+              {modalType === "edit" ? "Edit" : "Create"}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </form>
