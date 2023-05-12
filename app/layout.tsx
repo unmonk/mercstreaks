@@ -63,7 +63,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Providers>
-            <main className="min-h-screen w-auto bg-gradient-to-t from-green-950 to-green-600">
+            <main className="min-h-screen w-auto ">
               <Navbar />
               {children}
             </main>
