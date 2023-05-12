@@ -1,9 +1,19 @@
 "use client";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, FormProvider } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { db } from "@/lib/db";
+
+import { League } from "@/config/sports";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Dialog } from "@/components/ui/dialog";
 
 const CreateEventForm = () => {
   const {
@@ -12,6 +22,7 @@ const CreateEventForm = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data: FieldValues) => {
+    console.log(data);
     await fetch("/api/events", {
       method: "POST",
       body: JSON.stringify(data),
@@ -22,8 +33,8 @@ const CreateEventForm = () => {
   };
   //Fields:
   return (
-    <Card>
-      <CardTitle>Create Event</CardTitle>
+    <Card className="p-2">
+      <CardTitle className="p-2">Create Event</CardTitle>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
@@ -58,7 +69,25 @@ const CreateEventForm = () => {
             {...register("endTime", { required: true, valueAsDate: true })}
           />
           {errors.endTime && <span>This field is required</span>}
-          <Button type="submit">Create</Button>
+          <Label htmlFor="league">League</Label>
+          <Select>
+            <SelectTrigger className="w-[180px]" id="league">
+              <SelectValue placeholder="OTHER" />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.keys(League).map((key) => {
+                return (
+                  <SelectItem value={key} key={key}>
+                    {key}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+          {errors.league && <span>This field is required</span>}
+          <div className="mt-2 flex flex-row justify-center">
+            <Button type="submit">Create</Button>
+          </div>
         </form>
       </CardContent>
     </Card>
