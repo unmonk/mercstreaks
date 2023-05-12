@@ -21,7 +21,7 @@ const DateTabs = ({ today, tomorrow, tomorrow2 }: DateTabsProps) => {
           day: "numeric",
         })}
       </button>
-      <button className="m-0 w-1/3 border-2 border-l-0 border-black  bg-slate-800 bg-gradient-to-b from-slate-600 p-2  text-white">
+      <button className=" m-0 w-1/3 border-2 border-l-0 border-black bg-slate-800 bg-gradient-to-b from-slate-600 p-2  text-white">
         {tomorrow2.toLocaleDateString("en-US", {
           weekday: "short",
           month: "short",
