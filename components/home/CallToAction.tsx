@@ -1,0 +1,40 @@
+export default function HomeCTA() {
+  return (
+    <section className="bg-gray-900 text-white">
+      <div className=" px-4 py-32 lg:flex lg:h-screen lg:items-center">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl">
+            Understand User Flow.
+            <span className="sm:block"> Increase Conversion. </span>
+          </h1>
+
+          <p className="mx-auto mt-4 max-w-xl sm:text-xl/relaxed">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt
+            illo tenetur fuga ducimus numquam ea!
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <a
+              className="block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto"
+              href="/get-started"
+            >
+              Get Started
+            </a>
+
+            <a
+              className="block w-full rounded border border-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring active:bg-blue-500 sm:w-auto"
+              href="/about"
+            >
+              Learn More
+            </a>
+          </div>
+        </div>
+      </div>
+      How to Play 1. Predict the winner of ONE of the listed matchups. 2. Once
+      the matchup is final you can select the winner of a matchup that hasnt
+      started yet. 3. Build the longest winning streak each month or the most
+      correct picks each month and win. 4. New Forfeit feature allows you to
+      intentionally take a loss and make your next pick.
+    </section>
+  );
+}

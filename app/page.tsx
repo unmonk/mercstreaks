@@ -1,15 +1,15 @@
-import { DateTabs } from "@/components/DateTabs";
+import HomeCTA from "@/components/home/CallToAction";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const tomorrow2 = new Date(today);
-  tomorrow2.setDate(tomorrow2.getDate() + 2);
-
+  const { userId } = auth();
+  if (userId) {
+    redirect("/pick");
+  }
   return (
-    <div className="flex flex-col items-center">
-      <DateTabs today={today} tomorrow={tomorrow} tomorrow2={tomorrow2} />
-    </div>
+    <>
+      <HomeCTA />
+    </>
   );
 }

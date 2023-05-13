@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { siteConfig } from "@/config/site";
 import { Providers } from "../lib/providers";
 import { ClerkProvider } from "@clerk/nextjs";
+import CampaignBar from "@/components/CampaignBar";
 
 export const metadata = {
   title: {
@@ -65,6 +66,7 @@ export default function RootLayout({
           <Providers>
             <main className="min-h-screen w-auto ">
               <Navbar />
+              <CampaignBar />
               {children}
             </main>
           </Providers>
