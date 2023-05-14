@@ -26,6 +26,7 @@ export default async function EventsList() {
           <TableHead>Right Option</TableHead>
           <TableHead>Start Time</TableHead>
           <TableHead>End Time</TableHead>
+          <TableHead>League</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -55,6 +56,7 @@ export default async function EventsList() {
             <TableCell>{event.rightOption}</TableCell>
             <TableCell>{event.startTime.toLocaleString()}</TableCell>
             <TableCell>{event.endTime.toLocaleString()}</TableCell>
+            <TableCell>{event.league}</TableCell>
           </TableRow>
         ))}
       </TableBody>
