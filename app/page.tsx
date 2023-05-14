@@ -8,8 +8,9 @@ export default function Home() {
     redirect("/pick");
   }
   return (
-    <>
+    <div>
       <HomeCTA />
-    </>
+      <div></div>
+    </div>
   );
 }

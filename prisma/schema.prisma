@@ -24,8 +24,10 @@ model Event {
   startTime   DateTime
   endTime     DateTime
   network     String   @default("N/A")
+  gameId      String   @default(cuid())
   picks       Pick[]
 
+  @@unique([description, gameId])
   @@index([startTime(sort: Asc)])
 }
 
@@ -93,6 +95,11 @@ enum PickType {
 
 enum League {
   NBA
+  CFB
+  MBB
+  WBB
+  WNBA
+  NCAA
   MLB
   NFL
   NHL

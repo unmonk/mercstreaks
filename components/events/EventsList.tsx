@@ -10,7 +10,11 @@ import {
 import Link from "next/link";
 
 export default async function EventsList() {
-  const events = await db.event.findMany();
+  const events = await db.event.findMany({
+    orderBy: {
+      startTime: "asc",
+    },
+  });
 
   return (
     <Table>

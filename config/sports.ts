@@ -4,4 +4,9 @@ export enum League {
   NFL = "NFL",
   NHL = "NHL",
   OTHER = "OTHER",
+  CFB = "CFB",
+  MBB = "MBB",
+  WBB = "WBB",
+  WNBA = "WNBA",
+  NCAA = "NCAA",
 }
