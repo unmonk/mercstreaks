@@ -1,4 +1,6 @@
 import { DateTabs } from "@/components/DateTabs";
+import EventPickList from "@/components/events/EventPickList";
+
 export default function PicksPage() {
   const today = new Date();
   const tomorrow = new Date(today);
@@ -8,6 +10,7 @@ export default function PicksPage() {
   return (
     <div className="flex flex-col items-center">
       <DateTabs today={today} tomorrow={tomorrow} yesterday={yesterday} />
+      <EventPickList />
     </div>
   );
 }
