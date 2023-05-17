@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { EventPickCard } from "@/components/events/EventPickCard";
 
-export default async function EventPickList() {
+export default (async function EventPickList() {
   const events = await db.event.findMany({
     orderBy: {
       startTime: "asc",
@@ -27,4 +27,4 @@ export default async function EventPickList() {
       ))}
     </>
   );
-}
+} as unknown as (props: any) => JSX.Element);
