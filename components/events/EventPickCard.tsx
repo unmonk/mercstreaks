@@ -3,12 +3,23 @@ import React, { useState } from "react";
 import { EventPickQuestion } from "@/components/events/EventPickQuestion";
 import { EventPickHeader } from "@/components/events/EventPickHeader";
 import { EventPickFooter } from "@/components/events/EventPickFooter";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from "@/components/ui/card";
+import { PickButton } from "./PickButton";
 
 interface EventPickCardProps {
   leftOption: string;
   leftPickCount?: number;
   rightOption: string;
   rightPickCount?: number;
+  leftImage?: string;
+  rightImage?: string;
   description: string;
   startTime: Date;
   endTime?: Date;
@@ -52,75 +63,57 @@ const EventPickCard = (props: EventPickCardProps) => {
       : "bg-blue-600";
 
   return (
-    <div
-      className={`rounded-lg bg-gray-400 p-2 shadow-md dark:bg-gray-700 ${
-        pick !== PickType.NONE ? `opacity-90` : `opacity-100`
-      } ${
-        pick !== PickType.NONE
-          ? "border-2 border-yellow-200 shadow-lg shadow-yellow-200 transition-shadow"
-          : "border-gray-400"
-      }`}
-    >
-      <EventPickHeader
-        league={props.league}
-        startTime={props.startTime}
-        network={props.network}
-      />
-
-      <div className="pickcard rounded-lg bg-slate-50 p-2">
+    <Card className="mb-2 w-5/6 md:w-3/4">
+      <CardHeader>
+        <EventPickHeader
+          league={props.league}
+          startTime={props.startTime}
+          network={props.network}
+        />
+      </CardHeader>
+      <CardDescription>
         <EventPickQuestion
           description={props.description}
           tempColor={tempColor}
           tempLabel={tempLabel}
           tempWidth={tempWidth}
         />
-
-        <div className="mb-2 flex items-center justify-between gap-1">
-          <div className="flex items-center gap-1">
-            <button
-              disabled={pick === PickType.RIGHT}
-              className={`${
-                pick === PickType.LEFT
-                  ? "bg-slate-500"
-                  : "bg-slate-300 bg-gradient-to-t from-slate-200"
-              } aspect-square h-16 w-16 rounded-lg  px-2 py-2 text-white`}
-              onClick={() => handlePick(PickType.LEFT)}
-            >
-              <div className="text-center text-4xl">
-                {pick === PickType.LEFT && "☑️"}
-              </div>
-            </button>
-            <span className=" mx-1 text-base text-black ">
-              {props.leftOption}
-            </span>
+      </CardDescription>
+      <CardContent>
+        <div className="grid grid-flow-row grid-cols-5 md:grid-cols-5">
+          {/* Left */}
+          <div className="col-span-1 flex justify-start">
+            <PickButton pick={"LEFT"} handlePick={() => console.log("hello")} />
           </div>
-          <div className="hidden text-5xl md:block">🏈</div>
-          <div className="flex items-center gap-1">
-            <span className=" mx-1 text-base text-black">
-              {props.rightOption}
-            </span>
-            <button
-              disabled={pick === PickType.LEFT}
-              className={`${
-                pick === PickType.RIGHT
-                  ? "bg-slate-500"
-                  : "bg-slate-300 bg-gradient-to-t from-slate-200"
-              } aspect-square h-16 w-16 rounded-lg  px-2 py-2 text-white`}
-              onClick={() => handlePick(PickType.RIGHT)}
-            >
-              <div className="text-center text-4xl">
-                {pick === PickType.RIGHT && "☑️"}
-              </div>
-            </button>
+          <div className="col-span-1 flex items-center justify-self-start ">
+            {props.leftImage && (
+              <Avatar>
+                <AvatarImage src={props.leftImage} alt={props.leftOption} />
+              </Avatar>
+            )}
+            <span className=" mx-1 px-1 text-base ">{props.leftOption}</span>
+          </div>
+          {/* Middle */}
+          <div className="col-span-1"></div>
+          {/* Right */}
+          <div className="col-span-1 flex items-center justify-self-end">
+            {props.rightImage && (
+              <Avatar>
+                <AvatarImage src={props.rightImage} alt={props.rightOption} />
+              </Avatar>
+            )}
+            <span className="px-0.5">@</span>
+            <span className=" mx-1 px-1 text-base "> {props.rightOption}</span>
+          </div>
+          <div className="col-span-1 justify-self-end">
+            <PickButton
+              pick={"RIGHT"}
+              handlePick={() => console.log("hello")}
+            />
           </div>
         </div>
-
-        <EventPickFooter
-          leftPickCount={props.leftPickCount}
-          rightPickCount={props.rightPickCount}
-        />
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

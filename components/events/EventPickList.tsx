@@ -4,9 +4,9 @@ import { EventPickCard } from "@/components/events/EventPickCard";
 export default (async function EventPickList() {
   const events = await db.event.findMany({
     orderBy: {
-      startTime: "asc",
+      startTime: "desc",
     },
-    take: 5,
+    take: 15,
   });
 
   return (
@@ -20,6 +20,8 @@ export default (async function EventPickList() {
           rightOption={event.rightOption}
           startTime={event.startTime}
           endTime={event.endTime}
+          leftImage={event.leftImage ?? undefined}
+          rightImage={event.rightImage ?? undefined}
           league={event.league}
           network={event.network}
           temperature={40}

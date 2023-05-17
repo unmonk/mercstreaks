@@ -1,3 +1,9 @@
+"use client";
+import { useSearchParams, useParams, usePathname } from "next/navigation";
+
 export default function Stats() {
-  return <div>Hello Stats</div>;
+  const searchParams = useSearchParams();
+  console.log(searchParams);
+  console.log(searchParams.get("timezone"));
+  return <div></div>;
 }

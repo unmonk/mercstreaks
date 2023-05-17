@@ -6,7 +6,7 @@ interface EventPickHeaderProps {
 
 const EventPickHeader = (props: EventPickHeaderProps) => {
   return (
-    <div className="mx-1 mb-2 flex items-center justify-between rounded-lg bg-gray-400 dark:bg-gray-700">
+    <div className="flex items-center justify-between">
       <h3 className="text-md font-semibold">
         {props.league ?? "OTHER"} |{" "}
         {props.startTime.toLocaleTimeString([], {
@@ -15,7 +15,7 @@ const EventPickHeader = (props: EventPickHeaderProps) => {
           minute: "numeric",
         })}
       </h3>
-      <span className="text-sm text-gray-600">{props.network ?? "N/A"}</span>
+      <span className="text-sm">{props.network ?? "N/A"}</span>
     </div>
   );
 };

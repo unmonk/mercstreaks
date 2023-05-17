@@ -10,7 +10,7 @@ export default function Pick() {
   }
   return (
     <div>
-      <div>Not Logged In Pick Page</div>
+      <div>Not Logged In</div>
     </div>
   );
 }

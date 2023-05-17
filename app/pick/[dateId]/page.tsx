@@ -12,12 +12,9 @@ export default async function PicksPage({
 }) {
   dayjs.extend(customParseFormat);
   const dateId = params.dateId;
-  const today = dayjs(dateId, "YYYY-MM-DD", true);
-  const todayString = today.format("ddd MMM D");
-  const tomorrow = today.add(1, "day").format("ddd MMM D");
-  const yesterday = today.subtract(1, "day").format("ddd MMM D");
+  const todayDate = dayjs(dateId, "YYYY-MM-DD", true);
 
-  if (!today.isValid()) {
+  if (!todayDate.isValid()) {
     return (
       <div className="flex flex-col items-center">
         <div className="text-2xl font-bold">Invalid Date</div>
@@ -25,12 +22,26 @@ export default async function PicksPage({
       </div>
     );
   }
+  const tomorrowDate = todayDate.add(1, "day");
+  const yesterdayDate = todayDate.subtract(1, "day");
+  const today = {
+    routeString: `/pick/${todayDate.format("YYYY-MM-DD")}`,
+    displayString: todayDate.format("ddd, MMM D"),
+  };
+  const tomorrow = {
+    routeString: `/pick/${tomorrowDate.format("YYYY-MM-DD")}`,
+    displayString: tomorrowDate.format("ddd, MMM D"),
+  };
+  const yesterday = {
+    routeString: `/pick/${yesterdayDate.format("YYYY-MM-DD")}`,
+    displayString: yesterdayDate.format("ddd, MMM D"),
+  };
 
   //get events by date
 
   return (
     <div className="flex flex-col items-center">
-      <DateTabs today={todayString} tomorrow={tomorrow} yesterday={yesterday} />
+      <DateTabs today={today} tomorrow={tomorrow} yesterday={yesterday} />
       <Suspense fallback={<div>Loading...</div>}>
         <EventPickList />
       </Suspense>

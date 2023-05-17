@@ -19,6 +19,8 @@ model Event {
   updatedAt   DateTime @updatedAt
   leftOption  String
   rightOption String
+  leftImage   String?
+  rightImage  String?
   description String
   league      League   @default(OTHER)
   startTime   DateTime
