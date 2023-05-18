@@ -9,15 +9,18 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
 } from "@/components/ui/card";
 import { PickButton } from "./PickButton";
+import { Badge } from "../ui/badge";
+import { BoneIcon, CrownIcon, DumbbellIcon, MedalIcon } from "lucide-react";
 
 interface EventPickCardProps {
   leftOption: string;
-  leftPickCount?: number;
+  leftPercentage?: number;
   rightOption: string;
-  rightPickCount?: number;
+  rightPercentage?: number;
   leftImage?: string;
   rightImage?: string;
   description: string;
@@ -50,20 +53,8 @@ const EventPickCard = (props: EventPickCardProps) => {
     // }
   };
 
-  const tempWidth = props.temperature
-    ? props.temperature.toString()
-    : 10 ?? "10" + "%";
-  const tempLabel =
-    props.temperature >= 70 ? "Hot" : props.temperature >= 30 ? "Warm" : "Cold";
-  const tempColor =
-    props.temperature >= 70
-      ? "bg-red-600"
-      : props.temperature >= 30
-      ? "bg-yellow-600"
-      : "bg-blue-600";
-
   return (
-    <Card className="mb-2 w-5/6 md:w-3/4">
+    <Card className="mb-2 w-5/6 md:w-3/4 xl:w-1/2">
       <CardHeader>
         <EventPickHeader
           league={props.league}
@@ -71,45 +62,88 @@ const EventPickCard = (props: EventPickCardProps) => {
           network={props.network}
         />
       </CardHeader>
-      <CardDescription>
+      <CardContent>
         <EventPickQuestion
           description={props.description}
-          tempColor={tempColor}
-          tempLabel={tempLabel}
-          tempWidth={tempWidth}
+          temperature={props.temperature}
         />
-      </CardDescription>
+      </CardContent>
       <CardContent>
         <div className="grid grid-flow-row grid-cols-5 md:grid-cols-5">
-          {/* Left */}
-          <div className="col-span-1 flex justify-start">
+          <div className="col-span-1 flex justify-self-start">
+            {/* Pick Left */}
             <PickButton pick={"LEFT"} handlePick={() => console.log("hello")} />
           </div>
+          {/* Left */}
           <div className="col-span-1 flex items-center justify-self-start ">
-            {props.leftImage && (
-              <Avatar>
-                <AvatarImage src={props.leftImage} alt={props.leftOption} />
-              </Avatar>
-            )}
+            <div className="hidden sm:block">
+              {props.leftImage && (
+                <Avatar>
+                  <AvatarImage src={props.leftImage} alt={props.leftOption} />
+                </Avatar>
+              )}
+            </div>
             <span className=" mx-1 px-1 text-base ">{props.leftOption}</span>
           </div>
           {/* Middle */}
           <div className="col-span-1"></div>
           {/* Right */}
           <div className="col-span-1 flex items-center justify-self-end">
-            {props.rightImage && (
-              <Avatar>
-                <AvatarImage src={props.rightImage} alt={props.rightOption} />
-              </Avatar>
-            )}
-            <span className="px-0.5">@</span>
+            <span className="text-sm font-light">@</span>
+            <div className="hidden sm:block">
+              {props.rightImage && (
+                <Avatar>
+                  <AvatarImage src={props.rightImage} alt={props.rightOption} />
+                </Avatar>
+              )}
+            </div>
+
             <span className=" mx-1 px-1 text-base "> {props.rightOption}</span>
           </div>
+          {/* Pick Right */}
           <div className="col-span-1 justify-self-end">
             <PickButton
               pick={"RIGHT"}
               handlePick={() => console.log("hello")}
             />
+          </div>
+        </div>
+      </CardContent>
+      <CardContent>
+        <div className="grid grid-flow-row grid-cols-5 md:grid-cols-5">
+          <div className="col-span-1 flex justify-start">
+            {/* Pick Left */}
+            <p className="text-base font-light">
+              {props.leftPercentage ? props.leftPercentage : 0}%
+            </p>
+          </div>
+          {/* Left */}
+          <div className="col-span-1 justify-self-center">
+            <div className="hidden flex-row gap-1 sm:flex">
+              {/* <Badge variant={"default"}>
+                <div className="flex flex-row items-center">
+                  <p>9-3</p>
+                </div>
+              </Badge> */}
+            </div>
+          </div>
+          {/* Middle */}
+          <div className="col-span-1"></div>
+          {/* Right */}
+          <div className="col-span-1 justify-self-center">
+            <div className="hidden flex-row gap-1 sm:flex ">
+              {/* <Badge variant={"default"}>
+                <div className="flex flex-row items-center">
+                  <p>8-4</p>
+                </div>
+              </Badge> */}
+            </div>
+          </div>
+          {/* Pick Right */}
+          <div className="col-span-1 justify-self-end">
+            <p className="text-base font-light">
+              {props.rightPercentage ? props.rightPercentage : 0}%
+            </p>
           </div>
         </div>
       </CardContent>
