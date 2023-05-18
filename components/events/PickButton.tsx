@@ -9,10 +9,10 @@ interface PickButtonProps {
 const PickButton = ({ pick, handlePick }: PickButtonProps) => {
   return (
     <Button
-      className={`aspect-square h-16 w-16 rounded-lg bg-slate-200 text-white dark:bg-gray-700 sm:h-20 sm:w-20`}
+      className={`aspect-square h-14 w-14 rounded-lg bg-slate-200 text-white dark:bg-gray-700 sm:h-20 sm:w-20`}
       onClick={() => handlePick(PickType.LEFT)}
     >
-      <CheckSquareIcon />
+      {/* <CheckSquareIcon /> */}
     </Button>
   );
 };

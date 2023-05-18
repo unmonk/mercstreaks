@@ -30,7 +30,7 @@ export default function DateTabs({
   const handleClick = useCallback(() => {}, []);
 
   return (
-    <div className="mb-3 flex w-full flex-wrap border-b border-zinc-800 p-4 lg:w-3/5">
+    <div className="mb-3 flex w-full flex-wrap border-b border-zinc-800 p-1 lg:w-3/5">
       {days.length > 0 &&
         days.map((day) => {
           return (

@@ -83,13 +83,14 @@ const EventPickCard = (props: EventPickCardProps) => {
                 </Avatar>
               )}
             </div>
-            <span className=" mx-1 px-1 text-base ">{props.leftOption}</span>
+            <span className="mx-1 px-1 text-xs sm:text-sm md:text-base ">
+              {props.leftOption}
+            </span>
           </div>
           {/* Middle */}
-          <div className="col-span-1"></div>
+          <div className="col-span-1 md:block"></div>
           {/* Right */}
           <div className="col-span-1 flex items-center justify-self-end">
-            <span className="text-sm font-light">@</span>
             <div className="hidden sm:block">
               {props.rightImage && (
                 <Avatar>
@@ -98,7 +99,10 @@ const EventPickCard = (props: EventPickCardProps) => {
               )}
             </div>
 
-            <span className=" mx-1 px-1 text-base "> {props.rightOption}</span>
+            <span className="mx-1 px-1 text-xs sm:text-sm md:text-base">
+              <span className="pr-0.5 text-xs font-light text-primary">@</span>
+              {props.rightOption}
+            </span>
           </div>
           {/* Pick Right */}
           <div className="col-span-1 justify-self-end">
@@ -113,7 +117,7 @@ const EventPickCard = (props: EventPickCardProps) => {
         <div className="grid grid-flow-row grid-cols-5 md:grid-cols-5">
           <div className="col-span-1 flex justify-start">
             {/* Pick Left */}
-            <p className="text-base font-light">
+            <p className="text-xs font-light sm:text-sm  md:text-base">
               {props.leftPercentage ? props.leftPercentage : 0}%
             </p>
           </div>
@@ -141,7 +145,7 @@ const EventPickCard = (props: EventPickCardProps) => {
           </div>
           {/* Pick Right */}
           <div className="col-span-1 justify-self-end">
-            <p className="text-base font-light">
+            <p className="text-xs font-light sm:text-sm md:text-base">
               {props.rightPercentage ? props.rightPercentage : 0}%
             </p>
           </div>
