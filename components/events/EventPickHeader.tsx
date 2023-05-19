@@ -2,12 +2,17 @@ interface EventPickHeaderProps {
   league?: string;
   startTime: Date;
   network?: string;
+  active?: boolean;
 }
 
 const EventPickHeader = (props: EventPickHeaderProps) => {
   return (
     <div className="flex items-center justify-between">
-      <h3 className="text-sm font-semibold">
+      <h3
+        className={`
+        text-sm font-semibold
+       `}
+      >
         {props.league ?? "OTHER"} |{" "}
         {props.startTime.toLocaleTimeString([], {
           timeZoneName: "short",

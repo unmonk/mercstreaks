@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { EventPickQuestion } from "@/components/events/EventPickQuestion";
 import { EventPickHeader } from "@/components/events/EventPickHeader";
-import { EventPickFooter } from "@/components/events/EventPickFooter";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -72,7 +71,7 @@ const EventPickCard = (props: EventPickCardProps) => {
         <div className="grid grid-flow-row grid-cols-5 md:grid-cols-5">
           <div className="col-span-1 flex justify-self-start">
             {/* Pick Left */}
-            <PickButton pick={"LEFT"} handlePick={() => console.log("hello")} />
+            <PickButton pick={"LEFT"} handlePick={() => console.log("left")} />
           </div>
           {/* Left */}
           <div className="col-span-1 flex items-center justify-self-start ">
@@ -108,7 +107,7 @@ const EventPickCard = (props: EventPickCardProps) => {
           <div className="col-span-1 justify-self-end">
             <PickButton
               pick={"RIGHT"}
-              handlePick={() => console.log("hello")}
+              handlePick={() => console.log("right")}
             />
           </div>
         </div>

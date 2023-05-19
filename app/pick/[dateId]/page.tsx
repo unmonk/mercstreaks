@@ -4,6 +4,8 @@ import { Suspense } from "react";
 import dayjs from "dayjs";
 import Link from "next/link";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { ActivePickCard } from "@/components/events/ActivePickCard";
+import { Separator } from "@/components/ui/separator";
 
 export default async function PicksPage({
   params,
@@ -42,7 +44,21 @@ export default async function PicksPage({
   return (
     <div className="flex flex-col items-center">
       <DateTabs today={today} tomorrow={tomorrow} yesterday={yesterday} />
-      <Suspense fallback={<div>Loading...</div>}>
+      <ActivePickCard type={"won"} />
+      <Separator className="my-2" />
+      <Suspense
+        fallback={
+          <div className="loader-wrapper">
+            <div className="packman"></div>
+            <div className="dots">
+              <div className="dot"></div>
+              <div className="dot"></div>
+              <div className="dot"></div>
+              <div className="dot"></div>
+            </div>
+          </div>
+        }
+      >
         <EventPickList />
       </Suspense>
     </div>
