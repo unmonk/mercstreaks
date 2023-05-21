@@ -20,6 +20,7 @@ const ActivePickCard = ({ activePick }: ActivePickCardProps) => {
   const [days, hours, minutes, seconds] = useCountdown(
     activePick?.event?.startTime
   );
+
   if (!activePick) return null;
   const {
     league,
@@ -33,8 +34,10 @@ const ActivePickCard = ({ activePick }: ActivePickCardProps) => {
     endTime,
     id,
   } = activePick.event;
-  const { status, option } = activePick;
-
+  let { status, option } = activePick;
+  if (days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
+    status = Status.ACTIVE;
+  }
   const temperature = 0.5;
 
   return (
@@ -94,6 +97,7 @@ const ActivePickCard = ({ activePick }: ActivePickCardProps) => {
                     disabled={status !== Status.PENDING}
                     eventId={id}
                     status={status}
+                    image={leftImage ?? undefined}
                   />
                 </div>
                 {/* Left */}
@@ -136,6 +140,7 @@ const ActivePickCard = ({ activePick }: ActivePickCardProps) => {
                     disabled={status !== Status.PENDING}
                     eventId={id}
                     status={status}
+                    image={rightImage ?? undefined}
                   />
                 </div>
               </div>

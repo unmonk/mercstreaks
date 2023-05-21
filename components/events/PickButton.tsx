@@ -105,9 +105,14 @@ const PickButton = ({
             {status === Status.PENDING && <CheckSquareIcon />}
             {status === Status.LOSS && <FrownIcon />}
             {status === Status.WIN && <TrophyIcon />}
-            {status === Status.ACTIVE && (
-              <HourglassIcon className="animate-spin" />
-            )}
+            {status === Status.ACTIVE &&
+              ({ image } && !isNotMobile ? (
+                <Avatar className="animate-spin">
+                  <AvatarImage src={image} alt={side} />
+                </Avatar>
+              ) : (
+                <HourglassIcon className="animate-spin" />
+              ))}
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
