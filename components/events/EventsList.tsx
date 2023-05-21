@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 
-export default async function EventsList() {
+export default (async function EventsList() {
   const events = await db.event.findMany({
     orderBy: {
       startTime: "asc",
@@ -62,4 +62,4 @@ export default async function EventsList() {
       </TableBody>
     </Table>
   );
-}
+} as unknown as (props: any) => JSX.Element);

@@ -87,6 +87,7 @@ enum Status {
   PENDING
   CANCELLED
   DRAW
+  ACTIVE
 }
 
 enum PickType {

@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import { Providers } from "../lib/providers";
 import { ClerkProvider } from "@clerk/nextjs";
 import CampaignBar from "@/components/CampaignBar";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: {
@@ -68,6 +69,7 @@ export default function RootLayout({
               <Navbar />
               <CampaignBar />
               {children}
+              <Toaster />
             </main>
           </Providers>
         </body>

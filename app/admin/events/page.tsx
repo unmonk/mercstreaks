@@ -1,7 +1,6 @@
 import EventsList from "@/components/events/EventsList";
 import { EventDatePicker } from "@/components/events/EventDatePicker";
 import EventModal from "@/components/events/EventModal";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 export default function EventsPage() {
   return (
@@ -10,7 +9,10 @@ export default function EventsPage() {
         <h1>Events</h1>
         <div className="mx-2 flex flex-row px-2">
           <EventDatePicker />
-          <EventModal modalType="create" />
+          <EventModal
+            modalType="create"
+            onComplete={() => console.log("test")}
+          />
         </div>
       </div>
 

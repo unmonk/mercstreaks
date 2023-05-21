@@ -1,6 +1,7 @@
 interface EventPickQuestionProps {
   description: string;
   temperature: number;
+  showTemperature?: boolean;
 }
 
 const EventPickQuestion = (props: EventPickQuestionProps) => {
@@ -22,21 +23,23 @@ const EventPickQuestion = (props: EventPickQuestionProps) => {
   return (
     <div className="flex flex-row justify-between">
       <p className="pr-1 text-sm font-bold md:text-base">{props.description}</p>
-      <div className="h-2 w-1/6 rounded-full bg-gray-200 dark:bg-gray-700">
-        <div
-          className={`
-        ${tempColor} 
-        h-2
-        ${width}
-          rounded-full`}
-        />
+      {props.showTemperature && (
+        <div className="h-2 w-1/6 rounded-full bg-gray-200 dark:bg-gray-700">
+          <div
+            className={`
+         ${tempColor} 
+         h-2
+         ${width}
+           rounded-full`}
+          />
 
-        <span className="text-xs font-extralight">
-          {/*Maybe make this tooltip*/}
-          <p className="hidden md:inline-block"></p>
-          <p className="inline-block">{tempLabel}</p>
-        </span>
-      </div>
+          <span className="text-xs font-extralight">
+            {/*Maybe make this tooltip*/}
+            <p className="hidden md:inline-block"></p>
+            <p className="inline-block">{tempLabel}</p>
+          </span>
+        </div>
+      )}
     </div>
   );
 };
