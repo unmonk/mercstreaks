@@ -1,34 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MercStreaks
 
-## Getting Started
+An open source clone of a popular streak game
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+- New `/app` dir,
+- Server and Client Components
+- API Routes and Middlewares
+- Authentication using **Clerk**
+- ORM using **Prisma**
+- Database on **Vercel Postgresql**
+- UI Components built using **Radix UI** and **Shadcn/ui**
+- Styled using **Tailwind CSS**
+- Written in **TypeScript**
+- Deployed to **Vercel**
+- Validations using **Zod** --Coming Soon--
+
+## Roadmap
+
+- [x] Auth
+- [x] Db Models
+- [x] Event List
+- [x] Select / Unselect Pick
+- [ ] Complete Event
+- [ ] Calculate Streak
+- [ ] Cron jobs to Complete Events and Calculate Streaks
+- [ ] Cron jobs to Generate Events
+- [ ] Event Details
+- [ ] Leaderboard
+- [ ] User Profile
+- [ ] Home Page
+- [ ] Pick History
+- [ ] Campaigns
+- [ ] Campaign History
+- [ ] User Stats
+- [ ] User Settings
+- [ ] User Notifications
+- [ ] Groups
+- [ ] Add to Group
+- [ ] Group Leaderboard
+- [ ] Group Stats
+- [ ] Group Settings
+- [ ] Admin Panel
+- [ ] Manage Users
+- [ ] Manage Groups
+- [ ] Manage Events
+- [ ] Manage Campaigns
+- [ ] Manage Notifications
+- [ ] View Pick Logs
+
+## Running Locally
+
+1. Install dependencies using npm:
+
+```sh
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Copy `.env.example` to `.env.local` and update the variables.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+cp .env.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Start the development server:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```sh
+npm run dev
+```
