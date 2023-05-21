@@ -2,6 +2,11 @@
   "name": "streaks",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Scott Weaver",
+    "email": "scott@weaverscott.com"
+  },
+  "description": "Open Source clone of a popular streak game",
   "scripts": {
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
