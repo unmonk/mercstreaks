@@ -1,12 +1,12 @@
-import "./globals.css";
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
-import { Navbar } from "@/components/Navbar";
-import { siteConfig } from "@/config/site";
-import { Providers } from "../lib/providers";
-import { ClerkProvider } from "@clerk/nextjs";
-import CampaignBar from "@/components/CampaignBar";
-import { Toaster } from "@/components/ui/toaster";
+import "./globals.css"
+import { Inter } from "next/font/google"
+const inter = Inter({ subsets: ["latin"] })
+import { Navbar } from "@/components/Navbar"
+import { siteConfig } from "@/config/site"
+import { Providers } from "../lib/providers"
+import { ClerkProvider } from "@clerk/nextjs"
+import CampaignBar from "@/components/CampaignBar"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata = {
   title: {
@@ -53,12 +53,12 @@ export const metadata = {
     apple: "/apple-touch-icon.png",
   },
   //manifest: `${siteConfig.url}/site.webmanifest`,
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <ClerkProvider>
@@ -66,8 +66,6 @@ export default function RootLayout({
         <body className={inter.className}>
           <Providers>
             <main className="min-h-screen w-auto">
-              <Navbar />
-              <CampaignBar />
               {children}
               <Toaster />
             </main>
@@ -75,5 +73,5 @@ export default function RootLayout({
         </body>
       </html>
     </ClerkProvider>
-  );
+  )
 }

@@ -1,20 +1,7 @@
-import { authMiddleware } from "@clerk/nextjs";
-import { NextRequest, NextResponse } from "next/server";
+import { authMiddleware } from "@clerk/nextjs"
 
-export async function pickTimezoneMiddleware(req: NextRequest) {
-  const { nextUrl: url, headers } = req;
-  const timezone = headers.get("x-vercel-ip-timezone");
-  url.searchParams.set("tz", timezone ?? "America/Chicago");
-  return NextResponse.rewrite(url);
-}
-
-export default authMiddleware({
-  afterAuth(auth, req, evt) {
-    return pickTimezoneMiddleware(req);
-  },
-  publicRoutes: ["/"],
-});
+export default authMiddleware({ publicRoutes: ["/"] })
 
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/"],
-};
+}

@@ -1,21 +1,22 @@
-"use client";
+"use client"
 import {
   SignedIn,
   SignedOut,
   SignInButton,
   useAuth,
   UserButton,
-} from "@clerk/nextjs";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Skeleton } from "@/components/ui/skeleton";
+} from "@clerk/nextjs"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   CheckSquareIcon,
   UserIcon,
   Users2Icon,
   TrophyIcon,
   SettingsIcon,
-} from "lucide-react";
+} from "lucide-react"
+import ThemeToggle from "./ThemeToggle"
 
 interface NavbarProps {}
 
@@ -25,7 +26,7 @@ const Navbar = (props: NavbarProps) => {
     { name: "Stats", href: "/stats" },
     { name: "Groups", href: "/groups" },
     { name: "History", href: "/history" },
-  ];
+  ]
   const bottomNavLinks = [
     { name: "Pick", href: "/", icon: <CheckSquareIcon size={28} /> },
     { name: "Profile", href: "/stats", icon: <UserIcon size={28} /> },
@@ -40,9 +41,9 @@ const Navbar = (props: NavbarProps) => {
       href: "/settings",
       icon: <SettingsIcon size={28} />,
     },
-  ];
-  const pathname = usePathname();
-  const { userId } = useAuth();
+  ]
+  const pathname = usePathname()
+  const { userId } = useAuth()
 
   return (
     <>
@@ -52,12 +53,12 @@ const Navbar = (props: NavbarProps) => {
         <div className="fixed bottom-0 left-0 z-50 h-16 w-full border-t border-gray-200 bg-white dark:border-zinc-600 dark:bg-zinc-800 md:hidden">
           <div className="mx-auto grid h-full max-w-lg grid-cols-5 font-medium">
             {bottomNavLinks.map((link) => {
-              let isActive = false;
+              let isActive = false
               link.href === "/"
                 ? (isActive = pathname === link.href)
-                : (isActive = pathname.startsWith(link.href));
+                : (isActive = pathname.startsWith(link.href))
               if (link.name === "Settings" && !userId) {
-                return <SignInButton mode="redirect" key={link.name} />;
+                return <SignInButton mode="redirect" key={link.name} />
               }
               return (
                 <button
@@ -78,7 +79,7 @@ const Navbar = (props: NavbarProps) => {
                     {link.name}
                   </Link>
                 </button>
-              );
+              )
             })}
           </div>
         </div>
@@ -98,10 +99,10 @@ const Navbar = (props: NavbarProps) => {
           >
             <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-zinc-700 dark:bg-zinc-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-zinc-800">
               {topNavLinks.map((link) => {
-                let isActive = false;
+                let isActive = false
                 link.href === "/"
                   ? (isActive = pathname === link.href)
-                  : (isActive = pathname.startsWith(link.href));
+                  : (isActive = pathname.startsWith(link.href))
                 return (
                   <li
                     key={link.name}
@@ -118,8 +119,9 @@ const Navbar = (props: NavbarProps) => {
                       {link.name}
                     </Link>
                   </li>
-                );
+                )
               })}
+              <ThemeToggle />
             </ul>
           </div>
           <div>
@@ -133,7 +135,7 @@ const Navbar = (props: NavbarProps) => {
         </div>
       </nav>
     </>
-  );
-};
+  )
+}
 
-export { Navbar };
+export { Navbar }
