@@ -26,7 +26,7 @@ An open source clone of a popular streak game
 - [ ] Calculate Streak
 - [ ] Cron jobs to Complete Events and Calculate Streaks
 - [ ] Cron jobs to Generate Events
-- [ ] Event Details
+- [x] Event Details
 - [ ] Leaderboard
 - [ ] User Profile
 - [ ] Home Page
@@ -41,11 +41,11 @@ An open source clone of a popular streak game
 - [ ] Group Leaderboard
 - [ ] Group Stats
 - [ ] Group Settings
-- [ ] Admin Panel
+- [x] Admin Panel
 - [ ] Manage Users
 - [ ] Manage Groups
-- [ ] Manage Events
-- [ ] Manage Campaigns
+- [\] Manage Events
+- [\] Manage Campaigns
 - [ ] Manage Notifications
 - [ ] View Pick Logs
 
