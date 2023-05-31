@@ -6,7 +6,6 @@ async function fetchEvents(date: string, useParam: boolean = false) {
     next: {
       revalidate: 60,
     },
-    cache: "no-cache",
   })
   if (!res.ok) {
     throw new Error("Failed to fetch events")
@@ -78,25 +77,23 @@ export default async function EventPickList({
       const temperature = event._count.picks <= 100 ? event._count.picks : 100
 
       return (
-        <>
-          {/* @ts-expect-error Server Component */}
-          <EventPickCard
-            key={event.id}
-            id={event.id}
-            description={event.description}
-            leftOption={event.leftOption}
-            rightOption={event.rightOption}
-            startTime={event.startTime}
-            endTime={event.endTime}
-            leftImage={event.leftImage ?? undefined}
-            rightImage={event.rightImage ?? undefined}
-            league={event.league}
-            network={event.network}
-            temperature={temperature}
-            leftPercentage={leftPercentage}
-            rightPercentage={rightPercentage}
-          />
-        </>
+        // @ts-expect-error Server Component
+        <EventPickCard
+          key={event.id}
+          id={event.id}
+          description={event.description}
+          leftOption={event.leftOption}
+          rightOption={event.rightOption}
+          startTime={event.startTime}
+          endTime={event.endTime}
+          leftImage={event.leftImage ?? undefined}
+          rightImage={event.rightImage ?? undefined}
+          league={event.league}
+          network={event.network}
+          temperature={temperature}
+          leftPercentage={leftPercentage}
+          rightPercentage={rightPercentage}
+        />
       )
     })
 

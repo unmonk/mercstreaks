@@ -5,8 +5,6 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { PickButton } from "./PickButton"
 import { PickType } from "@prisma/client"
-import dayjs from "dayjs"
-
 interface EventPickCardProps {
   leftOption: string
   leftPercentage?: number
