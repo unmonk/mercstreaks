@@ -1,8 +1,8 @@
 interface EventPickHeaderProps {
-  league?: string;
-  startTime: Date;
-  network?: string;
-  active?: boolean;
+  league?: string
+  startTime: Date
+  network?: string
+  active?: boolean
 }
 
 const EventPickHeader = (props: EventPickHeaderProps) => {
@@ -22,7 +22,7 @@ const EventPickHeader = (props: EventPickHeaderProps) => {
       </h3>
       <span className="text-sm">{props.network ?? "N/A"}</span>
     </div>
-  );
-};
+  )
+}
 
-export { EventPickHeader };
+export { EventPickHeader }

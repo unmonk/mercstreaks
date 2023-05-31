@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton"
 export default function EventPickCardSkeleton({ num }: { num: number }) {
   const skeletons = Array.from({ length: num }).map((_, i) => (
-    <div className="border-1 min-h-6 mb-2 w-5/6 md:w-3/4 xl:w-1/2">
+    <div className="border-1 min-h-6 mb-6 w-5/6 gap-6 pb-6 md:w-3/4 xl:w-1/2">
       <div className="m-2 space-y-4">
         <Skeleton className="h-4" />
       </div>

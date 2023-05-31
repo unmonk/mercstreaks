@@ -1,5 +1,6 @@
 import { EventPickCard } from "@/components/events/EventPickCard"
 import { useAuth } from "@clerk/nextjs"
+import { PickType } from "@prisma/client"
 
 async function fetchEvents(date: string, useParam: boolean = false) {
   const res = await fetch(`/api/events/${useParam ? date : ""}`, {
@@ -27,6 +28,11 @@ interface EventProps {
   temperature: number
   leftPercentage: number
   rightPercentage: number
+  leftResult?: string
+  rightResult?: string
+  winner?: PickType
+  userPicked?: PickType
+
   picks: {
     id: string
     userId: string
@@ -52,7 +58,10 @@ export default async function EventPickList({
   const mappedEvents = events
     .filter((event) => {
       for (const pick of event.picks) {
-        if (pick.userId === userId) {
+        if (event.winner && pick.userId === userId) {
+          event.userPicked = pick.option as PickType
+          return true
+        } else if (pick.userId === userId) {
           return false
         }
       }
@@ -93,6 +102,10 @@ export default async function EventPickList({
           temperature={temperature}
           leftPercentage={leftPercentage}
           rightPercentage={rightPercentage}
+          leftResult={event.leftResult}
+          rightResult={event.rightResult}
+          winner={event.winner}
+          userPicked={event.userPicked}
         />
       )
     })

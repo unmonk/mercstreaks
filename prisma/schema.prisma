@@ -14,20 +14,23 @@ datasource db {
 }
 
 model Event {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   leftOption  String
   rightOption String
   leftImage   String?
+  leftResult  String?
+  rightResult String?
   rightImage  String?
   description String
-  league      League   @default(OTHER)
+  league      League    @default(OTHER)
   startTime   DateTime
   endTime     DateTime
-  network     String   @default("N/A")
-  gameId      String   @default(cuid())
-  createdBy   String   @default("SYSTEM")
+  network     String    @default("N/A")
+  gameId      String    @default(cuid())
+  createdBy   String    @default("SYSTEM")
+  winner      PickType?
   picks       Pick[]
 
   @@unique([description, gameId])

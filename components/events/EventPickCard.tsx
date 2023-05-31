@@ -12,6 +12,9 @@ interface EventPickCardProps {
   rightPercentage?: number
   leftImage?: string
   rightImage?: string
+  leftResult?: string
+  rightResult?: string
+  winner?: PickType
   description: string
   startTime: string
   endTime?: string
@@ -19,9 +22,35 @@ interface EventPickCardProps {
   temperature: number
   league?: string
   id: string
+  userPicked?: PickType
 }
 
 const EventPickCard = async (props: EventPickCardProps) => {
+  const genResultOrPercentage = (side: PickType) => {
+    let renderString: string | number = ""
+    if (side === PickType.LEFT) {
+      if (props.winner) {
+        if (props.winner === PickType.LEFT) {
+          renderString = props.leftResult ? props.leftResult : "W"
+        } else {
+          renderString = props.leftResult ? props.leftResult : "L"
+        }
+      } else {
+        renderString = (props.leftPercentage ? props.leftPercentage : 0) + "%"
+      }
+    } else {
+      if (props.winner) {
+        if (props.winner === PickType.RIGHT) {
+          renderString = props.rightResult ? props.rightResult : "W"
+        } else {
+          renderString = props.rightResult ? props.rightResult : "L"
+        }
+      } else {
+        renderString = (props.rightPercentage ? props.rightPercentage : 0) + "%"
+      }
+    }
+    return renderString
+  }
   return (
     <Card className="mb-2 w-5/6 md:w-3/4 xl:w-1/2">
       <CardHeader>
@@ -36,7 +65,7 @@ const EventPickCard = async (props: EventPickCardProps) => {
         <EventPickQuestion
           description={props.description}
           temperature={props.temperature}
-          showTemperature
+          showTemperature={props.winner ? false : true}
         />
       </CardContent>
       <CardContent>
@@ -47,10 +76,20 @@ const EventPickCard = async (props: EventPickCardProps) => {
               eventId={props.id}
               side={PickType.LEFT}
               image={props.leftImage}
+              winner={props.winner}
+              userPicked={props.userPicked}
             />
           </div>
           {/* Left */}
-          <div className="col-span-1 flex items-center justify-self-start ">
+          <div
+            className={`col-span-1 flex items-center justify-self-start 
+          ${
+            props.winner === PickType.LEFT
+              ? "rounded-lg bg-green-100 dark:bg-green-900"
+              : ""
+          }
+          `}
+          >
             <div className="hidden sm:block">
               {props.leftImage && (
                 <Avatar>
@@ -65,7 +104,15 @@ const EventPickCard = async (props: EventPickCardProps) => {
           {/* Middle */}
           <div className="col-span-1 md:block"></div>
           {/* Right */}
-          <div className="col-span-1 flex items-center justify-self-end">
+          <div
+            className={`col-span-1 flex items-center justify-self-end
+             ${
+               props.winner === PickType.RIGHT
+                 ? "rounded-lg bg-green-100 dark:bg-green-900"
+                 : ""
+             }
+          `}
+          >
             <div className="hidden sm:block">
               {props.rightImage && (
                 <Avatar>
@@ -85,6 +132,8 @@ const EventPickCard = async (props: EventPickCardProps) => {
               side={PickType.RIGHT}
               eventId={props.id}
               image={props.rightImage}
+              winner={props.winner}
+              userPicked={props.userPicked}
             />
           </div>
         </div>
@@ -95,7 +144,7 @@ const EventPickCard = async (props: EventPickCardProps) => {
           <div className="col-span-1 flex justify-start">
             {/* Pick Left */}
             <p className="text-xs font-light sm:text-sm  md:text-base">
-              {props.leftPercentage ? props.leftPercentage : 0}%
+              {genResultOrPercentage(PickType.LEFT)}
             </p>
           </div>
           {/* Left */}
@@ -111,7 +160,7 @@ const EventPickCard = async (props: EventPickCardProps) => {
           {/* Pick Right */}
           <div className="col-span-1 justify-self-end">
             <p className="text-xs font-light sm:text-sm md:text-base">
-              {props.rightPercentage ? props.rightPercentage : 0}%
+              {genResultOrPercentage(PickType.RIGHT)}
             </p>
           </div>
         </div>

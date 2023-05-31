@@ -1,15 +1,15 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { PickType, Status } from "@prisma/client";
+"use client"
+import { Button } from "@/components/ui/button"
+import { PickType, Status } from "@prisma/client"
 import {
   CheckSquareIcon,
   HourglassIcon,
   FrownIcon,
   TrophyIcon,
-} from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
-import { useToast } from "../ui/use-toast";
+} from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useState, useTransition } from "react"
+import { useToast } from "../ui/use-toast"
 
 import {
   AlertDialog,
@@ -21,16 +21,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Avatar, AvatarImage } from "../ui/avatar";
-import useMediaQuery from "@/hooks/useMediaQuery";
+} from "@/components/ui/alert-dialog"
+import { Avatar, AvatarImage } from "../ui/avatar"
+import useMediaQuery from "@/hooks/useMediaQuery"
 interface PickButtonProps {
-  side: PickType;
-  selected?: boolean;
-  disabled?: boolean;
-  eventId: string;
-  status?: Status;
-  image?: string;
+  side: PickType
+  selected?: boolean
+  disabled?: boolean
+  eventId: string
+  status?: Status
+  image?: string
+  winner?: PickType
+  userPicked?: PickType
 }
 
 const PickButton = ({
@@ -40,55 +42,57 @@ const PickButton = ({
   status,
   eventId,
   image,
+  winner,
+  userPicked,
 }: PickButtonProps) => {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
-  const [isFetching, setIsFetching] = useState(false);
-  const isNotMobile = useMediaQuery("(min-width: 640px)");
-  const { toast } = useToast();
-  const isMutating = isFetching || isPending;
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+  const [isFetching, setIsFetching] = useState(false)
+  const isNotMobile = useMediaQuery("(min-width: 640px)")
+  const { toast } = useToast()
+  const isMutating = isFetching || isPending
 
   const select = async (side: PickType) => {
-    setIsFetching(true);
+    setIsFetching(true)
     const res = await fetch("/api/picks", {
       method: "POST",
       body: JSON.stringify({
         eventId: eventId,
         option: side,
       }),
-    });
-    setIsFetching(false);
+    })
+    setIsFetching(false)
     if (res.status === 400) {
       toast({
         title: "Pick Failed",
         variant: "destructive",
         description: "You already have an active pick.",
-      });
-      return;
+      })
+      return
     } else {
       startTransition(() => {
-        router.refresh();
-      });
+        router.refresh()
+      })
     }
-  };
+  }
   const unSelect = async () => {
-    setIsFetching(true);
+    setIsFetching(true)
     const res = await fetch(`/api/picks/${eventId}`, {
       method: "DELETE",
-    });
-    setIsFetching(false);
+    })
+    setIsFetching(false)
     if (res.status === 400) {
       toast({
         title: "Failed to unselect pick",
         variant: "destructive",
-      });
-      return;
+      })
+      return
     } else {
       startTransition(() => {
-        router.refresh();
-      });
+        router.refresh()
+      })
     }
-  };
+  }
 
   if (selected) {
     return (
@@ -100,7 +104,7 @@ const PickButton = ({
       ${status === Status.ACTIVE && "bg-blue-500 dark:bg-blue-500"}
       ${status === Status.WIN && "bg-green-500 dark:bg-green-500"}
       ${status === Status.LOSS && "bg-red-500 dark:bg-red-500"}`}
-            disabled={disabled}
+            disabled={disabled ? true : winner ? true : false}
           >
             {status === Status.PENDING && <CheckSquareIcon />}
             {status === Status.LOSS && <FrownIcon />}
@@ -133,15 +137,24 @@ const PickButton = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    );
+    )
   }
 
   return (
     <Button
-      className={`aspect-square h-14 w-14 rounded-lg bg-slate-200 text-white dark:bg-gray-700 sm:h-20 sm:w-20`}
+      className={`aspect-square h-14 w-14 rounded-lg bg-slate-200 text-white dark:bg-gray-700 sm:h-20 sm:w-20
+      ${
+        userPicked === side &&
+        winner === side &&
+        "bg-green-500 dark:bg-green-500"
+      }
+      ${userPicked === side && winner !== side && "bg-red-500 dark:bg-red-500"}
+      `}
       onClick={() => select(side)}
-      disabled={disabled}
+      disabled={disabled ? true : winner ? true : false}
     >
+      {userPicked === side && winner !== side && <FrownIcon />}
+      {userPicked === side && winner === side && <TrophyIcon />}
       {image && !isNotMobile && (
         <Avatar>
           <AvatarImage src={image} alt={side} />
@@ -149,7 +162,7 @@ const PickButton = ({
       )}
       {isMutating && <HourglassIcon className="animate-spin" />}
     </Button>
-  );
-};
+  )
+}
 
-export { PickButton };
+export { PickButton }
