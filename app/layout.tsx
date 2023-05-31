@@ -1,11 +1,9 @@
 import "./globals.css"
 import { Inter } from "next/font/google"
 const inter = Inter({ subsets: ["latin"] })
-import { Navbar } from "@/components/Navbar"
 import { siteConfig } from "@/config/site"
 import { Providers } from "../lib/providers"
 import { ClerkProvider } from "@clerk/nextjs"
-import CampaignBar from "@/components/CampaignBar"
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata = {

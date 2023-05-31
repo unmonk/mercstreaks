@@ -1,6 +1,6 @@
 "use client"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useCallback, useState } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { useState } from "react"
 import { Button } from "./ui/button"
 import { ArrowLeftIcon, ArrowRightIcon, CalendarIcon } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
@@ -9,25 +9,18 @@ import dayjs, { Dayjs } from "dayjs"
 
 export default function DateTabs() {
   const router = useRouter()
-  const [date, setDate] = useState<Dayjs>(dayjs(new Date()))
-  const today = date.format("YYYY-MM-DD")
+  const params = useParams()
+  const [date, setDate] = useState<Dayjs>(
+    dayjs(params.date ? params.date : new Date())
+  )
   const yesterday = date.subtract(1, "day").format("YYYY-MM-DD")
   const tomorrow = date.add(1, "day").format("YYYY-MM-DD")
   const todayDisplay = date.format("ddd, MMM D")
-
-  const plusDate = useCallback(() => {
-    setDate((date) => date.add(1, "day"))
-    router.push(`/pick/${tomorrow}`)
-  }, [setDate, router, tomorrow])
-
-  // const minusDate = useCallback(() => {
-  //   setDate((date) => date.subtract(1, "day"))
-
-  // }, [setDate, router, yesterday])
-
   const minusDate = () => {
-    setDate((date) => date.subtract(1, "day"))
     router.push(`/pick/${yesterday}`)
+  }
+  const plusDate = () => {
+    router.push(`/pick/${tomorrow}`)
   }
 
   return (

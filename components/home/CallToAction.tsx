@@ -1,4 +1,5 @@
-import { Button } from "../ui/button";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 export default function HomeCTA() {
   return (
@@ -14,9 +15,11 @@ export default function HomeCTA() {
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button variant="default" size="lg">
-              Get Started
-            </Button>
+            <Link href="/signup">
+              <Button variant="default" size="lg">
+                Get Started
+              </Button>
+            </Link>
             <Button variant="secondary" size="lg">
               Learn More
             </Button>
@@ -24,5 +27,5 @@ export default function HomeCTA() {
         </div>
       </div>
     </section>
-  );
+  )
 }

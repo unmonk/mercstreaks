@@ -27,6 +27,7 @@ model Event {
   endTime     DateTime
   network     String   @default("N/A")
   gameId      String   @default(cuid())
+  createdBy   String   @default("SYSTEM")
   picks       Pick[]
 
   @@unique([description, gameId])
@@ -69,6 +70,7 @@ model Campaign {
   name            String
   description     String
   createdAt       DateTime @default(now())
+  createdBy       String   @default("SYSTEM")
   updatedAt       DateTime @updatedAt
   streakWinCount  Int      @default(1)
   winningStreakId String?

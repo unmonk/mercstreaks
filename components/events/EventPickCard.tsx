@@ -1,26 +1,26 @@
-"use client";
-import React from "react";
-import { EventPickQuestion } from "@/components/events/EventPickQuestion";
-import { EventPickHeader } from "@/components/events/EventPickHeader";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { PickButton } from "./PickButton";
-import { PickType } from "@prisma/client";
+import React from "react"
+import { EventPickQuestion } from "@/components/events/EventPickQuestion"
+import { EventPickHeader } from "@/components/events/EventPickHeader"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { PickButton } from "./PickButton"
+import { PickType } from "@prisma/client"
+import dayjs from "dayjs"
 
 interface EventPickCardProps {
-  leftOption: string;
-  leftPercentage?: number;
-  rightOption: string;
-  rightPercentage?: number;
-  leftImage?: string;
-  rightImage?: string;
-  description: string;
-  startTime: Date;
-  endTime?: Date;
-  network?: string;
-  temperature: number;
-  league?: string;
-  id: string;
+  leftOption: string
+  leftPercentage?: number
+  rightOption: string
+  rightPercentage?: number
+  leftImage?: string
+  rightImage?: string
+  description: string
+  startTime: string
+  endTime?: string
+  network?: string
+  temperature: number
+  league?: string
+  id: string
 }
 
 const EventPickCard = async (props: EventPickCardProps) => {
@@ -29,7 +29,7 @@ const EventPickCard = async (props: EventPickCardProps) => {
       <CardHeader>
         <EventPickHeader
           league={props.league}
-          startTime={props.startTime}
+          startTime={new Date(props.startTime)}
           network={props.network}
         />
       </CardHeader>
@@ -119,7 +119,7 @@ const EventPickCard = async (props: EventPickCardProps) => {
         </div>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export { EventPickCard };
+export { EventPickCard }
