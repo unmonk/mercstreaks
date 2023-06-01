@@ -35,8 +35,8 @@ export default function DateTabs() {
 
   return (
     <div className="mb-3 flex w-full flex-wrap items-center justify-center border-b border-zinc-800 p-1 text-center align-middle lg:w-3/5">
-      <Button variant={"ghost"} className="w-1/5">
-        {loading ? <Loading /> : <ArrowLeftIcon onClick={minusDate} />}
+      <Button variant={"ghost"} className="w-1/5" onClick={minusDate} > 
+        {loading ? <Loading /> : <ArrowLeftIcon />}
       </Button>
       <Popover>
         <PopoverTrigger asChild>
@@ -61,8 +61,8 @@ export default function DateTabs() {
           )}
         </PopoverContent>
       </Popover>
-      <Button variant={"ghost"} className="w-1/5">
-        {loading ? <Loading /> : <ArrowRightIcon onClick={plusDate} />}
+      <Button variant={"ghost"} className="w-1/5" onClick={plusDate}>
+        {loading ? <Loading /> : <ArrowRightIcon  />}
       </Button>
     </div>
   )
