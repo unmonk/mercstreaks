@@ -1,5 +1,6 @@
+"use server"
 import { League, PrismaClient } from "@prisma/client"
-const { nfl, nba, nhl, cfb, mbb } = require("sportsdataverse")
+const { nfl, nba, nhl, cfb, mbb, wbb, wnba } = require("sportsdataverse")
 import { addHours } from "@/lib/utils"
 
 function getApiClient(league: League): { api: any; timeOffset: number } {
@@ -14,9 +15,26 @@ function getApiClient(league: League): { api: any; timeOffset: number } {
       return { api: cfb, timeOffset: 3 }
     case League.MBB:
       return { api: mbb, timeOffset: 3 }
+    case League.WBB:
+      return { api: wbb, timeOffset: 3 }
+    case League.WNBA:
+      return { api: wnba, timeOffset: 3 }
     default:
       throw new Error("Invalid league")
   }
+}
+
+type EventProps = {
+  description: string
+  startTime: Date
+  endTime: Date
+  league: League
+  network: string
+  leftOption: string
+  leftImage: string | null
+  rightOption: string
+  rightImage: string | null
+  gameId: string
 }
 
 async function getSchedule(
@@ -24,11 +42,21 @@ async function getSchedule(
   writeToDb: boolean,
   prisma: PrismaClient,
   league: League
-) {
-  console.time(`getSchedule${league}`)
+): Promise<{
+  league: League
+  totalFetched: number
+  totalWritten: number
+  time: number
+  createdEvents: string[]
+}> {
+  performance.mark(`getSchedule${league}start`)
+
   const { api, timeOffset } = getApiClient(league)
   const schedule = await api.getSchedule({ year: year })
-  const events = []
+  const events: EventProps[] = []
+  const createdEvents: string[] = []
+
+  //Generate Events
   for (const day in schedule) {
     if (!schedule[day].games) continue
     for (const game of schedule[day].games) {
@@ -53,7 +81,6 @@ async function getSchedule(
           leftImage = teamImage
         }
       })
-
       const event = {
         description: question,
         startTime: new Date(gameTime),
@@ -69,9 +96,11 @@ async function getSchedule(
       events.push(event)
     }
   }
+  //Write to DB
   if (writeToDb) {
+    const eventPromises: Promise<any>[] = []
     events.forEach(async (event) => {
-      await prisma.event.upsert({
+      const eventPromise = prisma.event.upsert({
         where: {
           description_gameId: {
             description: event.description,
@@ -89,9 +118,28 @@ async function getSchedule(
         },
         create: event,
       })
+      eventPromises.push(eventPromise)
+    })
+    const results = await Promise.all(eventPromises)
+    results.forEach((result) => {
+      if (result) createdEvents.push(result.id)
     })
   }
-  console.timeEnd(`getSchedule${league}`)
+
+  performance.mark(`getSchedule${league}end`)
+  const perf = performance.measure(
+    `getSchedule${league}`,
+    `getSchedule${league}start`,
+    `getSchedule${league}end`
+  )
+
+  return {
+    league: league,
+    totalFetched: events.length,
+    totalWritten: createdEvents.length,
+    time: perf.duration,
+    createdEvents: createdEvents,
+  }
 }
 
 export { getSchedule }

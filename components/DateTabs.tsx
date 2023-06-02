@@ -7,6 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import dayjs, { Dayjs } from "dayjs"
 import Loading from "@/components/ui/loading"
+import Link from "next/link"
 
 export default function DateTabs() {
   const router = useRouter()
@@ -18,14 +19,7 @@ export default function DateTabs() {
   const yesterday = date.subtract(1, "day").format("YYYY-MM-DD")
   const tomorrow = date.add(1, "day").format("YYYY-MM-DD")
   const todayDisplay = date.format("ddd, MMM D")
-  const minusDate = () => {
-    setLoading(true)
-    router.push(`/pick/${yesterday}`)
-  }
-  const plusDate = () => {
-    setLoading(true)
-    router.push(`/pick/${tomorrow}`)
-  }
+
   const handleDateChange = (date: Date | undefined) => {
     setLoading(true)
     if (date) {
@@ -35,9 +29,13 @@ export default function DateTabs() {
 
   return (
     <div className="mb-3 flex w-full flex-wrap items-center justify-center border-b border-zinc-800 p-1 text-center align-middle lg:w-3/5">
-      <Button variant={"ghost"} className="w-1/5" onClick={minusDate} > 
+      <Link
+        href={`/pick/${yesterday}`}
+        className="inline-flex h-10 w-1/5 items-center justify-center rounded-md px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+      >
         {loading ? <Loading /> : <ArrowLeftIcon />}
-      </Button>
+      </Link>
+
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -61,9 +59,12 @@ export default function DateTabs() {
           )}
         </PopoverContent>
       </Popover>
-      <Button variant={"ghost"} className="w-1/5" onClick={plusDate}>
-        {loading ? <Loading /> : <ArrowRightIcon  />}
-      </Button>
+      <Link
+        href={`/pick/${tomorrow}`}
+        className="inline-flex h-10 w-1/5 items-center justify-center rounded-md px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+      >
+        {loading ? <Loading /> : <ArrowRightIcon />}
+      </Link>
     </div>
   )
 }
