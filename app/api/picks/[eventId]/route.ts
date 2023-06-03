@@ -1,6 +1,5 @@
 import { db } from "@/lib/db"
 import { auth, redirectToSignIn } from "@clerk/nextjs"
-import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
 
 export async function DELETE(
