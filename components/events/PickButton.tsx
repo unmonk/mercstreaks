@@ -7,7 +7,7 @@ import {
   FrownIcon,
   TrophyIcon,
 } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
 import { useToast } from "../ui/use-toast"
 
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Avatar, AvatarImage } from "../ui/avatar"
 import useMediaQuery from "@/hooks/useMediaQuery"
+import { start } from "repl"
 interface PickButtonProps {
   side: PickType
   selected?: boolean
@@ -46,6 +47,7 @@ const PickButton = ({
   userPicked,
 }: PickButtonProps) => {
   const router = useRouter()
+
   const [isPending, startTransition] = useTransition()
   const [isFetching, setIsFetching] = useState(false)
   const isNotMobile = useMediaQuery("(min-width: 640px)")
@@ -61,7 +63,6 @@ const PickButton = ({
         option: side,
       }),
     })
-    setIsFetching(false)
     if (res.status === 400) {
       toast({
         title: "Pick Failed",
@@ -69,29 +70,22 @@ const PickButton = ({
         description: "You already have an active pick.",
       })
       return
-    } else {
-      startTransition(() => {
-        router.refresh()
-      })
     }
+    router.refresh()
   }
   const unSelect = async () => {
     setIsFetching(true)
     const res = await fetch(`/api/picks/${eventId}`, {
       method: "DELETE",
     })
-    setIsFetching(false)
     if (res.status === 400) {
       toast({
         title: "Failed to unselect pick",
         variant: "destructive",
       })
       return
-    } else {
-      startTransition(() => {
-        router.refresh()
-      })
     }
+    router.refresh()
   }
 
   if (selected) {

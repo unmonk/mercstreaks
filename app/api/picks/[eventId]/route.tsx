@@ -1,21 +1,19 @@
-import { db } from "@/lib/db";
-import { auth, redirectToSignIn } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
+import { db } from "@/lib/db"
+import { auth, redirectToSignIn } from "@clerk/nextjs"
+import { revalidatePath } from "next/cache"
+import { NextResponse } from "next/server"
 
 export async function DELETE(
   req: Request,
   { params }: { params: { eventId: string } }
 ) {
-  const { eventId } = params;
-  const { userId } = auth();
+  const { eventId } = params
+  const { userId } = auth()
   if (!userId) {
-    return redirectToSignIn();
+    return redirectToSignIn()
   }
   if (!eventId) {
-    return NextResponse.json(
-      { error: "No event id provided" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "No event id provided" }, { status: 400 })
   }
   const deletedPick = await db.pick.delete({
     where: {
@@ -24,6 +22,6 @@ export async function DELETE(
         eventId: eventId,
       },
     },
-  });
-  return NextResponse.json(deletedPick, { status: 200 });
+  })
+  return NextResponse.json(deletedPick, { status: 200 })
 }

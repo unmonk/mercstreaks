@@ -1,13 +1,14 @@
-import { auth, redirectToSignIn } from "@clerk/nextjs";
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { auth, redirectToSignIn } from "@clerk/nextjs"
+import { NextRequest, NextResponse } from "next/server"
+import { db } from "@/lib/db"
+import { revalidatePath } from "next/cache"
 
 export async function POST(req: Request) {
-  const { userId, sessionClaims } = auth();
-  const { eventId, option } = await req.json();
+  const { userId, sessionClaims } = auth()
+  const { eventId, option } = await req.json()
 
   if (!userId || !sessionClaims) {
-    return redirectToSignIn();
+    return redirectToSignIn()
   }
 
   //check if user has existing active pick
@@ -19,10 +20,10 @@ export async function POST(req: Request) {
       userId: userId,
       isActive: true,
     },
-  });
+  })
 
   if (activePick) {
-    return NextResponse.json({ error: "Already Active Pick" }, { status: 400 });
+    return NextResponse.json({ error: "Already Active Pick" }, { status: 400 })
   }
 
   const newPick = await db.pick.create({
@@ -32,22 +33,19 @@ export async function POST(req: Request) {
       option: option,
       isActive: true,
     },
-  });
+  })
 
-  return NextResponse.json(newPick, { status: 200 });
+  return NextResponse.json(newPick, { status: 200 })
 }
 
 export async function PUT(req: Request) {
-  const { userId } = auth();
-  const { eventId } = await req.json();
+  const { userId } = auth()
+  const { eventId } = await req.json()
   if (!userId) {
-    return redirectToSignIn();
+    return redirectToSignIn()
   }
   if (!eventId) {
-    return NextResponse.json(
-      { error: "No event id provided" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "No event id provided" }, { status: 400 })
   }
   const updatedPick = await db.pick.update({
     where: {
@@ -59,15 +57,15 @@ export async function PUT(req: Request) {
     data: {
       isActive: false,
     },
-  });
-  return NextResponse.json(updatedPick, { status: 200 });
+  })
+  return NextResponse.json(updatedPick, { status: 200 })
 }
 
 export async function GET(req: Request) {
-  const { userId, sessionClaims } = auth();
+  const { userId, sessionClaims } = auth()
 
   if (!userId || !sessionClaims) {
-    return redirectToSignIn();
+    return redirectToSignIn()
   }
 
   const activePick = await db.pick.findFirst({
@@ -75,7 +73,7 @@ export async function GET(req: Request) {
       userId: userId,
       isActive: true,
     },
-  });
+  })
 
-  return NextResponse.json(activePick, { status: 200 });
+  return NextResponse.json(activePick, { status: 200 })
 }
