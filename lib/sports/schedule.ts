@@ -1,28 +1,7 @@
 "use server"
 import { League, PrismaClient } from "@prisma/client"
-const { nfl, nba, nhl, cfb, mbb, wbb, wnba } = require("sportsdataverse")
 import { addHours } from "@/lib/utils"
-
-function getApiClient(league: League): { api: any; timeOffset: number } {
-  switch (league) {
-    case League.NFL:
-      return { api: nfl, timeOffset: 3 }
-    case League.NBA:
-      return { api: nba, timeOffset: 3 }
-    case League.NHL:
-      return { api: nhl, timeOffset: 2 }
-    case League.CFB:
-      return { api: cfb, timeOffset: 3 }
-    case League.MBB:
-      return { api: mbb, timeOffset: 3 }
-    case League.WBB:
-      return { api: wbb, timeOffset: 3 }
-    case League.WNBA:
-      return { api: wnba, timeOffset: 3 }
-    default:
-      throw new Error("Invalid league")
-  }
-}
+import { getApiClient } from "@/lib/serverUtils"
 
 type EventProps = {
   description: string
@@ -51,7 +30,7 @@ async function getSchedule(
 }> {
   performance.mark(`getSchedule${league}start`)
 
-  const { api, timeOffset } = getApiClient(league)
+  const { api, timeOffset } = await getApiClient(league)
   const schedule = await api.getSchedule({ year: year })
   const events: EventProps[] = []
   const createdEvents: string[] = []
