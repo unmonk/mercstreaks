@@ -52,7 +52,17 @@ const EventPickCard = async (props: EventPickCardProps) => {
     return renderString
   }
   return (
-    <Card className="mb-2 w-5/6 md:w-3/4 xl:w-1/2">
+    <Card
+      className={`mb-2 w-5/6 md:w-3/4 xl:w-1/2
+    ${
+      props.userPicked && props.winner === props.userPicked
+        ? "border border-green-400 dark:border-green-900"
+        : props.userPicked && props.winner !== props.userPicked
+        ? "border border-red-400 dark:border-red-900"
+        : ""
+    }
+    `}
+    >
       <CardHeader>
         <EventPickHeader
           league={props.league}
@@ -82,10 +92,12 @@ const EventPickCard = async (props: EventPickCardProps) => {
           </div>
           {/* Left */}
           <div
-            className={`col-span-1 flex items-center justify-self-start 
+            className={`col-span-1 flex w-full items-center justify-self-start p-2
           ${
-            props.winner === PickType.LEFT
+            props.userPicked && props.winner === PickType.LEFT
               ? "rounded-lg bg-green-100 dark:bg-green-900"
+              : props.winner === PickType.LEFT
+              ? "rounded-lg bg-accent "
               : ""
           }
           `}
@@ -105,10 +117,12 @@ const EventPickCard = async (props: EventPickCardProps) => {
           <div className="col-span-1 md:block"></div>
           {/* Right */}
           <div
-            className={`col-span-1 flex items-center justify-self-end
+            className={`col-span-1 flex w-full items-center justify-self-end p-2
              ${
-               props.winner === PickType.RIGHT
+               props.userPicked && props.winner === PickType.RIGHT
                  ? "rounded-lg bg-green-100 dark:bg-green-900"
+                 : props.winner === PickType.RIGHT
+                 ? "rounded-lg bg-accent "
                  : ""
              }
           `}
