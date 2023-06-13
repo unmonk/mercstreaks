@@ -5,6 +5,11 @@ import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
 
 export async function POST(request: NextRequest) {
+  const cronSecret = request.headers.get("x-merc-cron-secret")
+  if (cronSecret !== process.env.CRON_SECRET) {
+    return NextResponse.json({ status: 401, message: "Unauthorized" })
+  }
+  
   const writeToDb = true
   //Date Handling
   const { year, month, day } = await getChicagoDate()
