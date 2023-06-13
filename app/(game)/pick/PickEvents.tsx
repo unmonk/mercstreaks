@@ -33,9 +33,14 @@ interface EventProps {
 interface PickEventsProps {
   events: EventProps[]
   userId: string | null
+  timezone?: string
 }
 
-export default async function PickEvents({ events, userId }: PickEventsProps) {
+export default async function PickEvents({
+  events,
+  userId,
+  timezone,
+}: PickEventsProps) {
   if (!events) return null
   if (!userId) return null
 
@@ -90,6 +95,7 @@ export default async function PickEvents({ events, userId }: PickEventsProps) {
           rightResult={event.rightResult}
           winner={event.winner}
           userPicked={event.userPicked}
+          timezone={timezone}
         />
       )
     })

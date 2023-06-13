@@ -23,6 +23,7 @@ interface EventPickCardProps {
   league?: string
   id: string
   userPicked?: PickType
+  timezone?: string
 }
 
 const EventPickCard = async (props: EventPickCardProps) => {
@@ -68,6 +69,7 @@ const EventPickCard = async (props: EventPickCardProps) => {
           league={props.league}
           startTime={new Date(props.startTime)}
           network={props.network}
+          timezone={props.timezone}
         />
       </CardHeader>
       {/* Row Above Teams / Buttons */}
@@ -78,22 +80,22 @@ const EventPickCard = async (props: EventPickCardProps) => {
           showTemperature={props.winner ? false : true}
         />
       </CardContent>
-      <CardContent>
-        <div className="grid grid-flow-row grid-cols-5 md:grid-cols-5">
-          <div className="col-span-1 flex justify-self-start">
-            {/* Pick Left */}
-            <PickButton
-              eventId={props.id}
-              side={PickType.LEFT}
-              image={props.leftImage}
-              winner={props.winner}
-              userPicked={props.userPicked}
-              selectPick={selectPick}
-            />
-          </div>
-          {/* Left */}
-          <div
-            className={`col-span-1 mx-2 flex w-full items-center justify-self-start p-2
+
+      <div className="grid grid-flow-row grid-cols-5 px-3 md:grid-cols-5">
+        <div className="col-span-1 flex justify-self-start">
+          {/* Pick Left */}
+          <PickButton
+            eventId={props.id}
+            side={PickType.LEFT}
+            image={props.leftImage}
+            winner={props.winner}
+            userPicked={props.userPicked}
+            selectPick={selectPick}
+          />
+        </div>
+        {/* Left */}
+        <div
+          className={`col-span-1 mx-2 flex w-full items-center justify-self-start p-2
           ${
             props.userPicked && props.winner === PickType.LEFT
               ? "rounded-lg bg-green-100 dark:bg-green-900"
@@ -102,23 +104,23 @@ const EventPickCard = async (props: EventPickCardProps) => {
               : ""
           }
           `}
-          >
-            <div className="hidden sm:block">
-              {props.leftImage && (
-                <Avatar>
-                  <AvatarImage src={props.leftImage} alt={props.leftOption} />
-                </Avatar>
-              )}
-            </div>
-            <span className="mx-1 px-1 text-xs sm:text-sm md:text-base ">
-              {props.leftOption}
-            </span>
+        >
+          <div className="hidden sm:block">
+            {props.leftImage && (
+              <Avatar>
+                <AvatarImage src={props.leftImage} alt={props.leftOption} />
+              </Avatar>
+            )}
           </div>
-          {/* Middle */}
-          <div className="col-span-1 md:block"></div>
-          {/* Right */}
-          <div
-            className={`col-span-1 mx-2 flex w-full items-center justify-self-end p-2
+          <span className="mx-1 text-xs sm:text-sm md:text-base ">
+            {props.leftOption}
+          </span>
+        </div>
+        {/* Middle */}
+        <div className="col-span-1 md:block"></div>
+        {/* Right */}
+        <div
+          className={`col-span-1 mx-2 flex w-full items-center justify-self-end p-2
              ${
                props.userPicked && props.winner === PickType.RIGHT
                  ? "rounded-lg bg-green-100 dark:bg-green-900"
@@ -127,33 +129,33 @@ const EventPickCard = async (props: EventPickCardProps) => {
                  : ""
              }
           `}
-          >
-            <div className="hidden sm:block">
-              {props.rightImage && (
-                <Avatar>
-                  <AvatarImage src={props.rightImage} alt={props.rightOption} />
-                </Avatar>
-              )}
-            </div>
+        >
+          <div className="hidden sm:block">
+            {props.rightImage && (
+              <Avatar>
+                <AvatarImage src={props.rightImage} alt={props.rightOption} />
+              </Avatar>
+            )}
+          </div>
 
-            <span className="pr-4 text-xs sm:text-sm md:text-base">
-              <span className="pr-1 text-xs font-light text-primary">@</span>
-              {props.rightOption}
-            </span>
-          </div>
-          {/* Pick Right */}
-          <div className="col-span-1 justify-self-end">
-            <PickButton
-              side={PickType.RIGHT}
-              eventId={props.id}
-              image={props.rightImage}
-              winner={props.winner}
-              userPicked={props.userPicked}
-              selectPick={selectPick}
-            />
-          </div>
+          <span className="mr-4 text-xs sm:text-sm md:text-base">
+            <span className="pr-1 text-xs font-light text-primary">@</span>
+            {props.rightOption}
+          </span>
         </div>
-      </CardContent>
+        {/* Pick Right */}
+        <div className="col-span-1 justify-self-end">
+          <PickButton
+            side={PickType.RIGHT}
+            eventId={props.id}
+            image={props.rightImage}
+            winner={props.winner}
+            userPicked={props.userPicked}
+            selectPick={selectPick}
+          />
+        </div>
+      </div>
+
       {/* Row Beneath Teams / Buttons */}
       <CardContent>
         <div className="grid grid-flow-row grid-cols-5 md:grid-cols-5">
