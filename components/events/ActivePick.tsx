@@ -7,6 +7,11 @@ import { Separator } from "@/components/ui/separator"
 import { PickType, Status } from "@prisma/client"
 import Countdown from "../Countdown"
 import { getActivePick, deletePick } from "@/app/(actions)/pickActions"
+import dayjs from "dayjs"
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc"
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 interface ActivePickProps {
   activePick: {
@@ -32,9 +37,13 @@ interface ActivePickProps {
     status: Status
     option: PickType
   }
+  timezone: string
 }
 
-export default async function ActivePick({ activePick }: ActivePickProps) {
+export default async function ActivePick({
+  activePick,
+  timezone,
+}: ActivePickProps) {
   if (!activePick) return null
   const {
     league,
@@ -92,6 +101,7 @@ export default async function ActivePick({ activePick }: ActivePickProps) {
                 league={league}
                 startTime={startTime}
                 network={network}
+                timezone={timezone}
               />
             </CardHeader>
             <Separator className="mb-1" />
@@ -179,7 +189,8 @@ export default async function ActivePick({ activePick }: ActivePickProps) {
                     )}
                     {status === Status.ACTIVE && (
                       <span className="mx-2">
-                        Estimated Completion: {endTime.toLocaleTimeString()}
+                        Estimated Completion:{" "}
+                        {dayjs(endTime).tz(timezone).format("h:mm A")}
                       </span>
                     )}
                   </div>

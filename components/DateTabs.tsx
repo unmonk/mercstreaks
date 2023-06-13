@@ -5,13 +5,21 @@ import { ArrowLeftIcon, ArrowRightIcon, CalendarIcon } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import dayjs from "dayjs"
-
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone"
+dayjs.extend(utc)
+dayjs.extend(timezone)
 import Link from "next/link"
 
-export default function DateTabs({ date }: { date: string | null }) {
+export default function DateTabs({
+  date,
+  timezone,
+}: {
+  date: string | null
+  timezone: string
+}) {
   const router = useRouter()
-  const dateParam = date ? dayjs(date) : dayjs()
-
+  const dateParam = date ? dayjs(date).tz(timezone) : dayjs().tz(timezone)
   const yesterday = dateParam.subtract(1, "day").format("YYYY-MM-DD")
   const tomorrow = dateParam.add(1, "day").format("YYYY-MM-DD")
   const todayDisplay = dateParam.format("ddd, MMM D")

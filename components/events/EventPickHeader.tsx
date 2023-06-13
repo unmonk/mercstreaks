@@ -1,8 +1,15 @@
+import dayjs from "dayjs"
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc"
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
 interface EventPickHeaderProps {
   league?: string
   startTime: Date
   network?: string
   active?: boolean
+  timezone?: string
 }
 
 const EventPickHeader = (props: EventPickHeaderProps) => {
@@ -14,11 +21,7 @@ const EventPickHeader = (props: EventPickHeaderProps) => {
        `}
       >
         {props.league ?? "OTHER"} |{" "}
-        {props.startTime.toLocaleTimeString([], {
-          timeZoneName: "short",
-          hour: "numeric",
-          minute: "numeric",
-        })}
+        {dayjs(props.startTime).tz(props.timezone).format("h:mm A ")}
       </h3>
       <span className="text-sm">{props.network ?? "N/A"}</span>
     </div>

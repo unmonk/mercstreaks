@@ -136,8 +136,8 @@ const EventPickCard = async (props: EventPickCardProps) => {
               )}
             </div>
 
-            <span className="mx-1 px-1 text-xs sm:text-sm md:text-base">
-              <span className="pr- text-xs font-light text-primary">@</span>
+            <span className="pr-4 text-xs sm:text-sm md:text-base">
+              <span className="pr-1 text-xs font-light text-primary">@</span>
               {props.rightOption}
             </span>
           </div>
