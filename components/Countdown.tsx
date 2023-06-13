@@ -1,14 +1,8 @@
-function Countdown({
-  days,
-  hours,
-  minutes,
-  seconds,
-}: {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}) {
+"use client"
+import { useCountdown } from "@/hooks/useCountdown"
+
+function Countdown({ startTime }: { startTime: Date }) {
+  const [days, hours, minutes, seconds] = useCountdown(startTime)
   return (
     <div className="flex w-full justify-between">
       <p className="mx-1 min-w-fit">Locks in:</p>
@@ -29,7 +23,7 @@ function Countdown({
         {seconds} secs
       </span>
     </div>
-  );
+  )
 }
 
-export default Countdown;
+export default Countdown

@@ -1,18 +1,5 @@
-import { EventPickCard } from "@/components/events/EventPickCard"
-import { useAuth } from "@clerk/nextjs"
 import { PickType } from "@prisma/client"
-
-async function fetchEvents(date: string, useParam: boolean = false) {
-  const res = await fetch(`/api/events/${useParam ? date : ""}`, {
-    next: {
-      revalidate: 60,
-    },
-  })
-  if (!res.ok) {
-    throw new Error("Failed to fetch events")
-  }
-  return res.json()
-}
+import { EventPickCard } from "@/components/events/EventPickCard"
 
 interface EventProps {
   id: string
@@ -43,17 +30,14 @@ interface EventProps {
   }
 }
 
-interface EventPickListProps {
-  date: string
-  useParam?: boolean
+interface PickEventsProps {
+  events: EventProps[]
+  userId: string | null
 }
 
-export default async function EventPickList({
-  date,
-  useParam,
-}: EventPickListProps) {
-  const { userId } = useAuth()
-  const events: EventProps[] = await fetchEvents(date, useParam)
+export default async function PickEvents({ events, userId }: PickEventsProps) {
+  if (!events) return null
+  if (!userId) return null
 
   const mappedEvents = events
     .filter((event) => {
@@ -110,19 +94,17 @@ export default async function EventPickList({
       )
     })
 
-  //get number of left picks from event.picks
-
   return (
     <>
-      {mappedEvents.length > 0 ? (
-        mappedEvents
-      ) : (
-        <>
-          <div className="flex flex-col items-center">
-            <h1 className="text-2xl font-bold">No Remaining Events</h1>
-          </div>
-        </>
+      {mappedEvents.length === 0 && (
+        <div className="flex h-full w-full flex-col items-center justify-center">
+          <h1 className="text-2xl font-bold">No More Events Today</h1>
+          <p className="text-lg font-medium">Check back tomorrow!</p>
+        </div>
       )}
+      {mappedEvents.length > 0 && <h4>{mappedEvents.length} Events</h4>}
+
+      {mappedEvents}
     </>
   )
 }

@@ -1,10 +1,10 @@
-import React from "react"
 import { EventPickQuestion } from "@/components/events/EventPickQuestion"
 import { EventPickHeader } from "@/components/events/EventPickHeader"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { PickButton } from "./PickButton"
 import { PickType } from "@prisma/client"
+import { selectPick } from "@/app/(actions)/pickActions"
 interface EventPickCardProps {
   leftOption: string
   leftPercentage?: number
@@ -88,11 +88,12 @@ const EventPickCard = async (props: EventPickCardProps) => {
               image={props.leftImage}
               winner={props.winner}
               userPicked={props.userPicked}
+              selectPick={selectPick}
             />
           </div>
           {/* Left */}
           <div
-            className={`col-span-1 flex w-full items-center justify-self-start p-2
+            className={`col-span-1 mx-2 flex w-full items-center justify-self-start p-2
           ${
             props.userPicked && props.winner === PickType.LEFT
               ? "rounded-lg bg-green-100 dark:bg-green-900"
@@ -117,7 +118,7 @@ const EventPickCard = async (props: EventPickCardProps) => {
           <div className="col-span-1 md:block"></div>
           {/* Right */}
           <div
-            className={`col-span-1 flex w-full items-center justify-self-end p-2
+            className={`col-span-1 mx-2 flex w-full items-center justify-self-end p-2
              ${
                props.userPicked && props.winner === PickType.RIGHT
                  ? "rounded-lg bg-green-100 dark:bg-green-900"
@@ -136,7 +137,7 @@ const EventPickCard = async (props: EventPickCardProps) => {
             </div>
 
             <span className="mx-1 px-1 text-xs sm:text-sm md:text-base">
-              <span className="pr-0.5 text-xs font-light text-primary">@</span>
+              <span className="pr- text-xs font-light text-primary">@</span>
               {props.rightOption}
             </span>
           </div>
@@ -148,6 +149,7 @@ const EventPickCard = async (props: EventPickCardProps) => {
               image={props.rightImage}
               winner={props.winner}
               userPicked={props.userPicked}
+              selectPick={selectPick}
             />
           </div>
         </div>

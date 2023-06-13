@@ -43,3 +43,30 @@ export async function POST(request: Request) {
   })
   return NextResponse.json(event)
 }
+
+export async function PUT(request: Request) {
+  const body = await request.json()
+  const event = await db.event.update({
+    where: {
+      id: body.id,
+    },
+    data: {
+      description: body.description,
+      leftOption: body.leftOption,
+      rightOption: body.rightOption,
+      startTime: body.startTime,
+      endTime: body.endTime,
+    },
+  })
+  return NextResponse.json(event)
+}
+
+export async function DELETE(request: Request) {
+  const body = await request.json()
+  const event = await db.event.delete({
+    where: {
+      id: body.id,
+    },
+  })
+  return NextResponse.json(event)
+}

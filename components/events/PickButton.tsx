@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Avatar, AvatarImage } from "../ui/avatar"
 import useMediaQuery from "@/hooks/useMediaQuery"
-import { start } from "repl"
 interface PickButtonProps {
   side: PickType
   selected?: boolean
@@ -34,6 +33,8 @@ interface PickButtonProps {
   image?: string
   winner?: PickType
   userPicked?: PickType
+  deletePick?: (eventId: string) => Promise<void>
+  selectPick?: (eventId: string, side: PickType) => Promise<void>
 }
 
 const PickButton = ({
@@ -45,47 +46,28 @@ const PickButton = ({
   image,
   winner,
   userPicked,
+  deletePick,
+  selectPick,
 }: PickButtonProps) => {
   const router = useRouter()
-
-  const [isPending, startTransition] = useTransition()
-  const [isFetching, setIsFetching] = useState(false)
   const isNotMobile = useMediaQuery("(min-width: 640px)")
   const { toast } = useToast()
-  const isMutating = isFetching || isPending
 
-  const select = async (side: PickType) => {
-    setIsFetching(true)
-    const res = await fetch("/api/picks", {
-      method: "POST",
-      body: JSON.stringify({
-        eventId: eventId,
-        option: side,
-      }),
+  const [isPending, startTransition] = useTransition()
+  const doPick = () => {
+    if (!selectPick) return
+    startTransition(async () => {
+      await selectPick(eventId, side)
+      router.refresh()
     })
-    if (res.status === 400) {
-      toast({
-        title: "Pick Failed",
-        variant: "destructive",
-        description: "You already have an active pick.",
-      })
-      return
-    }
-    router.refresh()
   }
-  const unSelect = async () => {
-    setIsFetching(true)
-    const res = await fetch(`/api/picks/${eventId}`, {
-      method: "DELETE",
+
+  const unSelectPick = () => {
+    if (!deletePick) return
+    startTransition(async () => {
+      await deletePick(eventId)
+      router.refresh()
     })
-    if (res.status === 400) {
-      toast({
-        title: "Failed to unselect pick",
-        variant: "destructive",
-      })
-      return
-    }
-    router.refresh()
   }
 
   if (selected) {
@@ -123,7 +105,7 @@ const PickButton = ({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => unSelect()}
+              onClick={() => unSelectPick()}
               className="bg-destructive"
             >
               Continue
@@ -144,17 +126,17 @@ const PickButton = ({
       }
       ${userPicked === side && winner !== side && "bg-red-500 dark:bg-red-500"}
       `}
-      onClick={() => select(side)}
+      onClick={() => doPick()}
       disabled={disabled ? true : winner ? true : false}
     >
-      {userPicked === side && winner !== side && <FrownIcon />}
-      {userPicked === side && winner === side && <TrophyIcon />}
+      {userPicked === side && winner !== side && <FrownIcon size={14} />}
+      {userPicked === side && winner === side && <TrophyIcon size={14} />}
       {image && !isNotMobile && (
         <Avatar>
           <AvatarImage src={image} alt={side} />
         </Avatar>
       )}
-      {isMutating && <HourglassIcon className="animate-spin" />}
+      {isPending && <HourglassIcon className="animate-spin" />}
     </Button>
   )
 }

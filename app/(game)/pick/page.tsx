@@ -1,30 +1,38 @@
-import DateTabs from "@/components/DateTabs"
 import ActivePick from "@/components/events/ActivePick"
-import PickListWrapper from "@/components/events/PickListWrapper"
-import EventPickCardSkeleton from "@/components/skeletons/EventPickCardSkeleton"
-import { Separator } from "@/components/ui/separator"
-import { auth, redirectToSignIn } from "@clerk/nextjs"
-import dayjs from "dayjs"
-import { redirect } from "next/navigation"
-import { Suspense } from "react"
 
-export default function Pick() {
+import { auth, redirectToSignIn } from "@clerk/nextjs"
+import DateTabs from "@/components/DateTabs"
+import { Separator } from "@/components/ui/separator"
+import PickEvents from "./PickEvents"
+import { getActivePick, getEvents } from "@/app/(actions)/pickActions"
+
+interface PickPageProps {
+  searchParams: {
+    date: string | undefined
+  }
+}
+
+export default async function Pick({ searchParams }: PickPageProps) {
   const { userId } = auth()
   if (!userId) {
     redirectToSignIn()
   }
+  const dateParam = searchParams.date ?? null
+  const [activePick, todaysEvents] = await Promise.all([
+    getActivePick(userId),
+    getEvents(dateParam),
+  ])
 
   return (
     <div className="flex flex-col items-center">
-      <DateTabs />
-      <Suspense fallback={<EventPickCardSkeleton num={1} />}>
-        <ActivePick />
-      </Suspense>
+      <DateTabs date={dateParam} />
       <Separator className="my-2" />
-      <Suspense fallback={<EventPickCardSkeleton num={3} />}>
-        {/* @ts-expect-error Server Component */}
-        <PickListWrapper />
-      </Suspense>
+      {/* @ts-expect-error Server Component */}
+      <ActivePick activePick={activePick} />
+      {/* @ts-expect-error Server Component */}
+      <PickEvents events={todaysEvents} userId={userId} />
     </div>
   )
 }
+
+export const revalidate = 0

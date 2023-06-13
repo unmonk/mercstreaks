@@ -1,3 +1,4 @@
+"use client"
 import { LayoutGrid, ListMusic, Radio, User } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -6,6 +7,12 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from "next/link"
 
 export default function Sidebar({ className }: { className?: string }) {
+  const onClick = async () => {
+    const results = await fetch("/api/cron/eventresults", {
+      method: "POST",
+    })
+    console.log(results)
+  }
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
@@ -41,7 +48,12 @@ export default function Sidebar({ className }: { className?: string }) {
             Stuff
           </h2>
           <div className="space-y-1">
-            <Button variant="ghost" size="sm" className="w-full justify-start">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full justify-start"
+              onClick={() => onClick()}
+            >
               <ListMusic className="mr-2 h-4 w-4" />
               Stuff
             </Button>
