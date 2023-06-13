@@ -1,8 +1,10 @@
 import dayjs from "dayjs"
 import timezone from "dayjs/plugin/timezone"
 import utc from "dayjs/plugin/utc"
+import advancedFormat from "dayjs/plugin/advancedFormat"
 dayjs.extend(utc)
 dayjs.extend(timezone)
+dayjs.extend(advancedFormat)
 
 interface EventPickHeaderProps {
   league?: string
@@ -21,7 +23,7 @@ const EventPickHeader = (props: EventPickHeaderProps) => {
        `}
       >
         {props.league ?? "OTHER"} |{" "}
-        {dayjs(props.startTime).tz(props.timezone).format("h:mm A ")}
+        {dayjs(props.startTime).tz(props.timezone).format("h:mm A z")}
       </h3>
       <span className="text-sm">{props.network ?? "N/A"}</span>
     </div>

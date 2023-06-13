@@ -20,6 +20,7 @@ export default function DateTabs({
 }) {
   const router = useRouter()
   const dateParam = date ? dayjs(date).tz(timezone) : dayjs().tz(timezone)
+  console.log(dateParam)
   const yesterday = dateParam.subtract(1, "day").format("YYYY-MM-DD")
   const tomorrow = dateParam.add(1, "day").format("YYYY-MM-DD")
   const todayDisplay = dateParam.format("ddd, MMM D")

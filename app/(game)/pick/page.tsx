@@ -16,7 +16,8 @@ interface PickPageProps {
 export default async function Pick({ searchParams }: PickPageProps) {
   const { userId } = auth()
   const headersList = headers()
-  const timezone = headersList.get("x-vercel-ip-timezone") || "America/New_York"
+  const timezone = headersList.get("x-vercel-ip-timezone") || "America/Chicago"
+  console.log(timezone)
   if (!userId) {
     redirectToSignIn()
   }
