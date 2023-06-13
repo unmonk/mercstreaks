@@ -1,0 +1,13 @@
+name: hourly-event-schedules-to-results
+on:
+  schedule:
+    - cron: '5 * * * *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: hourly-event-schedules-to-results
+        run: |
+          curl --request POST \
+          --url 'https://mercstreaks.vercel.app/api/cron/eventresults' \
+          --header 'x-merc-cron-secret: ${{ secrets.CRON_SECRET }}'
