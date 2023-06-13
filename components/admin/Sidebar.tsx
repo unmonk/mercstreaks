@@ -7,11 +7,15 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from "next/link"
 
 export default function Sidebar({ className }: { className?: string }) {
-  const onClick = async () => {
+  const generateResults = async () => {
     const results = await fetch("/api/cron/eventresults", {
       method: "POST",
     })
-    console.log(results)
+  }
+  const generateEvents = async () => {
+    const results = await fetch("/api/cron/scheduletoevents", {
+      method: "POST",
+    })
   }
   return (
     <div className={cn("pb-12", className)}>
@@ -52,10 +56,19 @@ export default function Sidebar({ className }: { className?: string }) {
               variant="ghost"
               size="sm"
               className="w-full justify-start"
-              onClick={() => onClick()}
+              onClick={() => generateEvents()}
             >
               <ListMusic className="mr-2 h-4 w-4" />
-              Stuff
+              Generate Events
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full justify-start"
+              onClick={() => generateResults()}
+            >
+              <ListMusic className="mr-2 h-4 w-4" />
+              Generate Results
             </Button>
           </div>
         </div>

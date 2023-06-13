@@ -102,7 +102,7 @@ export default async function PickEvents({ events, userId }: PickEventsProps) {
           <p className="text-lg font-medium">Check back tomorrow!</p>
         </div>
       )}
-      {mappedEvents.length > 0 && <h4>{mappedEvents.length} Events</h4>}
+      {mappedEvents.length > 0 && <h4>{mappedEvents.length} Match Ups</h4>}
 
       {mappedEvents}
     </>
