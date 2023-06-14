@@ -3,7 +3,7 @@ import ActivePick from "@/components/events/ActivePick"
 import { auth, redirectToSignIn } from "@clerk/nextjs"
 import DateTabs from "@/components/DateTabs"
 import { Separator } from "@/components/ui/separator"
-import PickEvents from "./PickEvents"
+import PickEvents from "@/components/events/PickEvents"
 import { getActivePick, getEvents } from "@/app/(actions)/pickActions"
 import { headers } from "next/headers"
 
@@ -23,7 +23,7 @@ export default async function Pick({ searchParams }: PickPageProps) {
   const dateParam = searchParams.date ?? null
   const [activePick, todaysEvents] = await Promise.all([
     getActivePick(userId),
-    getEvents(dateParam),
+    getEvents(dateParam, timezone),
   ])
 
   return (

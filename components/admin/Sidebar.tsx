@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from "next/link"
 
+
 export default function Sidebar({ className }: { className?: string }) {
   const generateResults = async () => {
     const results = await fetch("/api/cron/eventresults", {
@@ -17,6 +18,7 @@ export default function Sidebar({ className }: { className?: string }) {
       method: "POST",
     })
   }
+
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">

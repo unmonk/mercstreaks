@@ -3,6 +3,10 @@ import { auth, currentUser } from "@clerk/nextjs"
 import { PickType } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 import dayjs from "dayjs"
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc"
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 async function getActivePick(userId: string | null) {
   "use server"
@@ -19,16 +23,16 @@ async function getActivePick(userId: string | null) {
   return activePick
 }
 
-async function getEvents(date: string | null) {
+async function getEvents(date: string | null, timezone: string) {
   "use server"
   if (!date) {
     const events = await db.event.findMany({
       where: {
         startTime: {
-          gte: dayjs().toDate(),
+          gte: dayjs().tz(timezone).toDate(),
         },
         endTime: {
-          lte: dayjs().add(1, "day").toDate(),
+          lte: dayjs().tz(timezone).add(1, "day").toDate(),
         },
       },
       include: {
@@ -37,16 +41,19 @@ async function getEvents(date: string | null) {
           select: { picks: true },
         },
       },
+      orderBy: {
+        startTime: "asc",
+      },
     })
     return events
   } else {
     const events = await db.event.findMany({
       where: {
         startTime: {
-          gte: dayjs(date).toDate(),
+          gte: dayjs(date).tz(timezone).toDate(),
         },
         endTime: {
-          lte: dayjs(date).add(1, "day").toDate(),
+          lte: dayjs(date).tz(timezone).add(1, "day").toDate(),
         },
       },
       include: {
