@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site"
 import { Providers } from "../lib/providers"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Toaster } from "@/components/ui/toaster"
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata = {
   title: {
@@ -65,6 +66,7 @@ export default function RootLayout({
           <Providers>
             <main className="min-h-screen w-auto">
               {children}
+              <Analytics />
               <Toaster />
             </main>
           </Providers>
